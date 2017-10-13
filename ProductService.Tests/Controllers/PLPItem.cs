@@ -10,7 +10,7 @@ namespace ProductService.Tests.Controllers
 
         public PLPItem(int productId, string productName, string imageUrl, int price, int? discountPrice)
         {
-            ProductID = productId;
+            this.ProductID = productId;
             ProductName = productName;
             ImageURL = imageUrl;
             Price = price;
