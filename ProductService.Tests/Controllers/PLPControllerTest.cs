@@ -2,24 +2,28 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProductService;
 using ProductService.Controllers;
+using Moq;
+using NUnit.Framework;
 
 namespace ProductService.Tests.Controllers
 {
-    [TestClass]
-    public class HomeControllerTest
+    [TestFixture]
+    public class PLPControllerTest
     {
-        [TestMethod]
-        public void Index()
+        private Mock<IProductsDataStore> productAdapter;
+
+        private PLPController plpController;
+
+        private Mock<ITelemetryLogger> telemetryLogger;
+
+        [SetUp]
+        public void SetUp()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            this.productAdapter = new Mock<IProductsDataStore>();
+            this.plpController = new PLPController(this.productAdapter.Object);
+            this.telemetryLogger = new Mock<ITelemetryLogger>();
         }
+
+
     }
 }
