@@ -23,7 +23,7 @@ namespace ProductService.Controllers
             this._productDataStore = productDataStore;
         }
 
-        [System.Web.Mvc.Route("/")]
+        [System.Web.Mvc.Route("products")]
         [System.Web.Mvc.HttpGet]
         [SwaggerResponse(HttpStatusCode.OK, "Products", typeof(List<PlpItem>))]
         public async Task<IHttpActionResult> GetItems()
