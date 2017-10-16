@@ -29,17 +29,12 @@ namespace ProductService.Tests.DataStore
         [Test]
         public void Return_exact_list_of_items()
         {
-            // call data store method to return all items and store in variable 
-            var filePath = "/../../../ProductService/DataStore/TestData.json";
-            var itemsFromDataStore = this._productDataStore.GetAllItemsAsync().Result;
-            var itemName = itemsFromDataStore.ElementAt(1).ProductName;
+            List<PlpItem> itemsFromDataStore = (List<PlpItem>) this._productDataStore.GetAllItemsAsync().Result;
+
             // import items from json file and assign to variable
             var result = LoadJson();
-            var resultName = result.ElementAt(1).ProductName;
-            Console.WriteLine("Item: " + itemName + " Result: " +resultName);
-            // assert the 2 above are the same
-            CollectionAssert.AreNotEqual(itemsFromDataStore.ToList(), result);
-            //Assert.That(itemsFromDataStore.ToList(), Is.EqualTo(result));
+
+            CollectionAssert.AreEqual(itemsFromDataStore, result);
         }
 
 

@@ -1,3 +1,6 @@
+using System;
+using System.Drawing;
+
 namespace ProductService.Models
 {
     public class PlpItem
@@ -17,5 +20,25 @@ namespace ProductService.Models
             this.DiscountPrice = discountPrice;
         }
 
+        public override bool Equals(Object obj)
+        {
+            PlpItem plpItem = (PlpItem) obj;
+            // Check for null values and compare run-time types.
+            if (plpItem == null || GetType() != plpItem.GetType())
+                return false;
+
+            if (this.ProductId != plpItem.ProductId ||
+                this.ProductName != plpItem.ProductName ||
+                this.SpashImgUrl != plpItem.SpashImgUrl ||
+                this.Price != plpItem.Price ||
+                this.DiscountPrice != plpItem.DiscountPrice)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
