@@ -107,11 +107,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\PLPControllerTest.cs" />
-    <Compile Include="Controllers\PLPItem.cs" />
+    <Compile Include="DataStore\ProductDataStoreTest.cs" />
+    <Compile Include="Controllers\PlpControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

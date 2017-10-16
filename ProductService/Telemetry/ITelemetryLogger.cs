@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ProductService.Models;
 
 namespace ProductService.Tests.Controllers
 {

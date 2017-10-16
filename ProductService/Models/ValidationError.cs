@@ -1,4 +1,4 @@
-namespace ProductService.Tests.Controllers
+namespace ProductService.Models
 {
     public class ValidationError
     {
