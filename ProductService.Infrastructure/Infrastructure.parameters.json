@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appServiceNameEUN": {
+      "value": "asbc-as-todo-eun-teamname"
+    },
+    "appServicePlanNameEUN": {
+      "value": "asbc-asp-todo-eun-teamname"
+    },
+    "appServiceNameEUW": {
+      "value": "asbc-as-todo-euw-teamname"
+    },
+    "appServicePlanNameEUW": {
+      "value": "asbc-asp-todo-euw-teamname"
+    },
+    "databaseName": {
+      "value": "asbc-cdb-todo-eun-teamname"
+    },
+    "appInsightsName": {
+      "value": "asbc-ai-todo-eun-teamname"
+    }
+  }
+}
