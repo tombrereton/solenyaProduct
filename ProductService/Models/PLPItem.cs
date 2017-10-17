@@ -7,7 +7,7 @@ namespace ProductService.Models
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string SpashImgUrl { get; set; }
+        public string SplashImgUrl { get; set; }
         public int Price { get; set; }
         public int? DiscountPrice { get; set; }
 
@@ -16,11 +16,11 @@ namespace ProductService.Models
             
         }
 
-        public PlpItem(int productId, string productName, string spashImgUrl, int price, int? discountPrice)
+        public PlpItem(int productId, string productName, string splashImgUrl, int price, int? discountPrice)
         {
             this.ProductId = productId;
             this.ProductName = productName;
-            this.SpashImgUrl = spashImgUrl;
+            this.SplashImgUrl = splashImgUrl;
             this.Price = price;
             this.DiscountPrice = discountPrice;
         }
@@ -34,7 +34,7 @@ namespace ProductService.Models
 
             if (this.ProductId != plpItem.ProductId ||
                 this.ProductName != plpItem.ProductName ||
-                this.SpashImgUrl != plpItem.SpashImgUrl ||
+                this.SplashImgUrl != plpItem.SplashImgUrl ||
                 this.Price != plpItem.Price ||
                 this.DiscountPrice != plpItem.DiscountPrice)
             {
