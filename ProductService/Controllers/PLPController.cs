@@ -22,7 +22,7 @@ namespace ProductService.Controllers
             this._productDataStore = productDataStore;
         }
 
-        [Route("products")]
+        [Route("")]
         [HttpGet]
         public async Task<IHttpActionResult> GetItems()
         {
