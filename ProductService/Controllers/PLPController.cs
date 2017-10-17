@@ -28,7 +28,6 @@ namespace ProductService.Controllers
         {
             var items = await this._productDataStore.GetAllItemsAsync() as List<PlpItem>;
             return this.Ok(items);
-
         }
 
     }
