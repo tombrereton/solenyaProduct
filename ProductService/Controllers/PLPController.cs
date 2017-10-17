@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using ProductService.DataStore;
 using ProductService.Models;
 using ProductService.Tests.Controllers;
@@ -23,12 +22,11 @@ namespace ProductService.Controllers
             this._productDataStore = productDataStore;
         }
 
-        [System.Web.Mvc.Route("products")]
-        [System.Web.Mvc.HttpGet]
-        [SwaggerResponse(HttpStatusCode.OK, "Products", typeof(List<PlpItem>))]
+        [Route("products")]
+        [HttpGet]
         public async Task<IHttpActionResult> GetItems()
         {
-            var items = await this._productDataStore.GetAllItemsAsync();
+            var items = await this._productDataStore.GetAllItemsAsync() as List<PlpItem>;
             return this.Ok(items);
 
         }

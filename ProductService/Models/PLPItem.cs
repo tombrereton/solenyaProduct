@@ -11,6 +11,11 @@ namespace ProductService.Models
         public int Price { get; set; }
         public int? DiscountPrice { get; set; }
 
+        public PlpItem()
+        {
+            
+        }
+
         public PlpItem(int productId, string productName, string spashImgUrl, int price, int? discountPrice)
         {
             this.ProductId = productId;

@@ -38,7 +38,7 @@ namespace ProductService.Tests.Controllers
 
             var result = this._plpController.GetItems().GetAwaiter().GetResult();
 
-            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<IEnumerable<PlpItem>>>());
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
         [Test]
         public void Return_non_empty_list_of_products()
@@ -49,7 +49,7 @@ namespace ProductService.Tests.Controllers
 
             var result = this._plpController.GetItems().GetAwaiter().GetResult();
 
-            var resultItems = ((OkNegotiatedContentResult<IEnumerable<PlpItem>>) result).Content;
+            var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
             
 
             Assert.NotNull(resultItems);
@@ -64,7 +64,7 @@ namespace ProductService.Tests.Controllers
 
             var result = this._plpController.GetItems().GetAwaiter().GetResult();
 
-            var resultItems = ((OkNegotiatedContentResult<IEnumerable<PlpItem>>) result).Content;
+            var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
             
             Assert.That(resultItems, Is.EqualTo(plpItems));
         }

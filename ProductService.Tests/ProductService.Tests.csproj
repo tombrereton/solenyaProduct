@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="DataStore\ProductDataStoreTest.cs" />
     <Compile Include="Controllers\PlpControllerTest.cs" />
+    <Compile Include="Integration\IntegrationControllerDataStoreTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
       <Name>ProductService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

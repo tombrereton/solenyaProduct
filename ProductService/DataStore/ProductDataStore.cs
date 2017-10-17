@@ -66,7 +66,6 @@ namespace ProductService.DataStore
                             }
                             ]";
 
-
             return JsonConvert.DeserializeObject<List<PlpItem>>(productString);
         }
 
