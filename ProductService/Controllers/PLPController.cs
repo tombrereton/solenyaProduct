@@ -30,7 +30,6 @@ namespace ProductService.Controllers
         {
             var items = await this._productDataStore.GetAllItemsAsync();
             return this.Ok(items);
-
         }
 
     }

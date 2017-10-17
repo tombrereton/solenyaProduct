@@ -31,7 +31,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Return_OK_response_for_GET_request()
+        public void Should_return_OK_response_for_GET_request()
         {
             var plpItems = new List<PlpItem> {CreateTestPlpItem(123), CreateTestPlpItem(345)};
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
@@ -40,8 +40,9 @@ namespace ProductService.Tests.Controllers
 
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<IEnumerable<PlpItem>>>());
         }
+
         [Test]
-        public void Return_non_empty_list_of_products()
+        public void Should_return_non_empty_list_of_products()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -56,7 +57,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Return_list_of_items()
+        public void Should_return_list_of_items()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -80,7 +81,6 @@ namespace ProductService.Tests.Controllers
 //
 //            Assert.That(result, Is.InstanceOf<HttpStatusCode.BadRequest>());
 //        }
-
 
         private static PlpItem CreateTestPlpItem(int id)
         {
