@@ -27,6 +27,10 @@ namespace ProductService
             // Use json not XML
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
+
+
+            // Enable Cors
+            config.EnableCors();
         }
 
         private static void ConfigureContainer(HttpConfiguration config)
