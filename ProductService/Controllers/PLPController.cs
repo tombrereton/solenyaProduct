@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Castle.Core.Internal;
 using ProductService.DataStore;
 using ProductService.Models;
 using ProductService.Tests.Controllers;
@@ -28,7 +29,12 @@ namespace ProductService.Controllers
         [EnableCors(origins: "http://team-solenya-product-dev.azurewebsites.net/", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> GetItems()
         {
+
             var items = await this._productDataStore.GetAllItemsAsync() as List<PlpItem>;
+            if (items.IsNullOrEmpty())
+            {
+                return this.NotFound();
+            }
             return this.Ok(items);
         }
 
