@@ -15,11 +15,11 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace ProductService.Controllers
 {
-    public class PlpController : ApiController
+    public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
 
-        public PlpController(IProductsDataStore productDataStore)
+        public ProductController(IProductsDataStore productDataStore)
         {
             this._productDataStore = productDataStore;
         }

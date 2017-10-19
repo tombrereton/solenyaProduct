@@ -15,13 +15,13 @@ namespace ProductService.Tests.Integration
     public class IntegrationControllerDataStoreTest
     {
         private ProductDataStore _productDataStore;
-        private PlpController _controller;
+        private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
             this._productDataStore = new ProductDataStore();
-            this._controller = new PlpController(this._productDataStore);
+            this._controller = new ProductController(this._productDataStore);
         }
 
         [Test]

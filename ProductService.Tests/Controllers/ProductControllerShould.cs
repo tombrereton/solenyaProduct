@@ -15,11 +15,11 @@ using Assert = NUnit.Framework.Assert;
 namespace ProductService.Tests.Controllers
 {
     [TestFixture]
-    public class PlpControllerShould
+    public class ProductControllerShould
     {
         private Mock<IProductsDataStore> _productAdapter;
 
-        private PlpController _plpController;
+        private ProductController _productController;
 
         private Mock<ITelemetryLogger> _telemetryLogger;
 
@@ -27,7 +27,7 @@ namespace ProductService.Tests.Controllers
         public void SetUp()
         {
             this._productAdapter = new Mock<IProductsDataStore>();
-            this._plpController = new PlpController(this._productAdapter.Object);
+            this._productController = new ProductController(this._productAdapter.Object);
             this._telemetryLogger = new Mock<ITelemetryLogger>();
         }
 
@@ -37,7 +37,7 @@ namespace ProductService.Tests.Controllers
             var plpItems = new List<PlpItem> {CreateTestPlpItem(123), CreateTestPlpItem(345)};
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
 
-            var result = this._plpController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems().GetAwaiter().GetResult();
 
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
@@ -49,7 +49,7 @@ namespace ProductService.Tests.Controllers
 
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
 
-            var result = this._plpController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems().GetAwaiter().GetResult();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
             
@@ -64,7 +64,7 @@ namespace ProductService.Tests.Controllers
 
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
 
-            var result = this._plpController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems().GetAwaiter().GetResult();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
             
@@ -78,7 +78,7 @@ namespace ProductService.Tests.Controllers
 
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
 
-            var result = await this._plpController.GetItems();
+            var result = await this._productController.GetItems();
 
             Assert.IsAssignableFrom<NotFoundResult>(result);
 
