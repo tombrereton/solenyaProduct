@@ -25,7 +25,7 @@ namespace ProductService.Controllers
 
         [Route("")]
         [HttpGet]
-        [EnableCors(origins: "http://team-solenya-product-dev.azurewebsites.net/", headers: "*", methods: "*")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> GetItems()
         {
             var items = await this._productDataStore.GetAllItemsAsync() as List<PlpItem>;
