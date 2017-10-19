@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStore\ProductDataStoreTest.cs" />
-    <Compile Include="Controllers\PlpControllerTest.cs" />
+    <Compile Include="Controllers\ProductControllerShould.cs" />
     <Compile Include="Integration\IntegrationControllerDataStoreTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
