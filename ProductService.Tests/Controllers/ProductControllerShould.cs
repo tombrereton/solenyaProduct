@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,7 +32,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Should_return_OK_response_for_GET_request()
+        public void Return_OK_response_for_GET_request()
         {
             var plpItems = new List<PlpItem> {CreateTestPlpItem(123), CreateTestPlpItem(345)};
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
@@ -42,7 +43,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Should_return_non_empty_list_of_products()
+        public void Return_non_empty_list_of_products()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -57,7 +58,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Should_return_list_of_items()
+        public void Return_list_of_items()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -70,17 +71,20 @@ namespace ProductService.Tests.Controllers
             Assert.That(resultItems, Is.EqualTo(plpItems));
         }
 
-//        [Test]
-//        public void Return_not_OK_response_for_GET_request()
-//        {
-//            var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
-//
-//            this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
-//
-//            var result = this._productController.GetItems().GetAwaiter().GetResult();
-//
-//            Assert.That(result, Is.InstanceOf<HttpStatusCode.BadRequest>());
-//        }
+        [Test]
+        public async Task Return_not_found_result_when_datastore_returns_no_products()
+        {
+            var plpItems = new List<PlpItem> {};
+
+            this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
+
+            var result = await this._productController.GetItems();
+
+            Assert.IsAssignableFrom<NotFoundResult>(result);
+
+        }
+
+            //Add test to check if data has been hard coded
 
         private static PlpItem CreateTestPlpItem(int id)
         {
