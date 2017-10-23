@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProductService;
 using ProductService.Controllers;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using ProductService.DataStore;
 using ProductService.Models;
@@ -15,9 +14,6 @@ using Assert = NUnit.Framework.Assert;
 
 namespace ProductService.Tests.Controllers
 {
-    /// <summary>
-    /// The product controller should.
-    /// </summary>
     [TestFixture]
     public class ProductControllerShould
     {
@@ -98,7 +94,5 @@ namespace ProductService.Tests.Controllers
             int discountPrice = 1500;
             return new PlpItem(id, productName, imageUrl, price, discountPrice);
         }
-
     }
-
 }
