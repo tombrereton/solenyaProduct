@@ -15,6 +15,8 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace ProductService.Controllers
 {
+    using System.Configuration;
+
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
@@ -29,6 +31,8 @@ namespace ProductService.Controllers
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> GetItems()
         {
+
+            var x = ConfigurationManager.AppSettings["DatabaseUrl"];
 
             var items = await this._productDataStore.GetAllItemsAsync() as List<PlpItem>;
             if (items.IsNullOrEmpty())

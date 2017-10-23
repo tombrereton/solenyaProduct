@@ -1,40 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Web.Http.Results;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using ProductService.Controllers;
 using ProductService.DataStore;
 using ProductService.Models;
-using ProductService.Tests.Controllers;
 
-namespace ProductService.Tests.DataStore
+namespace ProductService.Tests.Integration
 {
     [TestFixture]
-    public class ProductDataStoreTest
+    public class IntegrationControllerDataStoreTest
     {
         private ProductDataStore _productDataStore;
+        private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
             this._productDataStore = new ProductDataStore();
+            this._controller = new ProductController(this._productDataStore);
         }
 
         [Test]
-        public void Return_exact_list_of_items()
+        public void Should_return_contents_matching_list_from_json_with_controller_and_datastore()
         {
-            var itemsFromDataStore = this._productDataStore.GetAllItemsAsync();
-            
+            var response = this._controller.GetItems().GetAwaiter().GetResult();
+            var response_contents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
+
             // import items from json file and assign to variable
             var result = GetItems();
 
-            CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), result);
+            CollectionAssert.AreEqual(response_contents, result);
+        }
+
+        [Test]
+        public void Should_return_all_items_with_controller_and_datastore()
+        {
+            var response = this._controller.GetItems().GetAwaiter().GetResult();
+
+            Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
 
 
@@ -90,5 +97,5 @@ namespace ProductService.Tests.DataStore
             return JsonConvert.DeserializeObject<List<PlpItem>>(productString);
         }
 
-}
+    }
 }
