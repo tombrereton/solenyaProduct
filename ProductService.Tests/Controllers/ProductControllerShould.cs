@@ -85,7 +85,6 @@ namespace ProductService.Tests.Controllers
         }
 
             //Add test to check if data has been hard coded
-
         private static PlpItem CreateTestPlpItem(int id)
         {
             string productName = "Test Product";
