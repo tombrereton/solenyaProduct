@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Web.Http.Results;
-using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using ProductService.Controllers;
-using ProductService.DataStore;
-using ProductService.Models;
-using ProductService.Tests.Controllers;
-
-namespace ProductService.Tests.DataStore
+﻿namespace ProductService.Tests.DataStore
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Newtonsoft.Json;
+    using NUnit.Framework;
+
+    using ProductService.DataStore;
+    using ProductService.Models;
+
     [TestFixture]
-    public class ProductDataStoreTest
+    public class ProductDataStoreTests
     {
         private ProductDataStore _productDataStore;
 
@@ -27,28 +21,18 @@ namespace ProductService.Tests.DataStore
         }
 
         [Test]
-        public void Return_exact_list_of_items()
+        public void ReturnExactListOfItems()
         {
             var itemsFromDataStore = this._productDataStore.GetAllItemsAsync();
-            
-            // import items from json file and assign to variable
+
             var result = GetItems();
 
             CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), result);
         }
 
-
-        private static PlpItem CreateTestPlpItem(int id)
-        {
-            string productName = "Test Product";
-            string imageUrl = "Test URL";
-            int price = 2000;
-            int discountPrice = 1500;
-            return new PlpItem(id, productName, imageUrl, price, discountPrice);
-        }
         private static IEnumerable<PlpItem> GetItems()
         {
-            const string productString = @"[
+            const string ProductString = @"[
                             {   
                                 ""productID"": 123,
                                 ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
@@ -86,7 +70,7 @@ namespace ProductService.Tests.DataStore
                             }
                             ]";
 
-            return JsonConvert.DeserializeObject<List<PlpItem>>(productString);
+            return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
         }
 }
 }

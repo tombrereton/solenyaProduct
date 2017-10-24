@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Http.Results;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using ProductService.Controllers;
-using ProductService.DataStore;
-using ProductService.Models;
-
-namespace ProductService.Tests.Integration
+﻿namespace ProductService.Tests.Integration
 {
+    using System.Collections.Generic;
+    using System.Web.Http.Results;
+    using Newtonsoft.Json;
+    using NUnit.Framework;
+    using ProductService.Controllers;
+    using ProductService.DataStore;
+    using ProductService.Models;
+
     [TestFixture]
-    public class IntegrationControllerDataStoreTest
+    public class ProductControllerProductDataStoreIntegrationTests
     {
         private ProductDataStore _productDataStore;
         private ProductController _controller;
@@ -25,38 +22,28 @@ namespace ProductService.Tests.Integration
         }
 
         [Test]
-        public void Should_return_contents_matching_list_from_json_with_controller_and_datastore()
+        public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItems().GetAwaiter().GetResult();
-            var response_contents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
+            var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
             var result = GetItems();
 
-            CollectionAssert.AreEqual(response_contents, result);
+            CollectionAssert.AreEqual(responseContents, result);
         }
 
         [Test]
-        public void Should_return_all_items_with_controller_and_datastore()
+        public void ShouldReturnAllItemsWithControllerAndDatastore()
         {
             var response = this._controller.GetItems().GetAwaiter().GetResult();
 
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
 
-
-        private static PlpItem CreateTestPlpItem(int id)
-        {
-            string productName = "Test Product";
-            string imageUrl = "Test URL";
-            int price = 2000;
-            int discountPrice = 1500;
-            return new PlpItem(id, productName, imageUrl, price, discountPrice);
-        }
-
         private static IEnumerable<PlpItem> GetItems()
         {
-            const string productString = @"[
+            const string ProductString = @"[
                             {   
                                 ""productID"": 123,
                                 ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
@@ -94,7 +81,7 @@ namespace ProductService.Tests.Integration
                             }
                             ]";
 
-            return JsonConvert.DeserializeObject<List<PlpItem>>(productString);
+            return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
         }
     }
 }

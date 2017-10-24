@@ -4,8 +4,8 @@ namespace ProductService.Models
     {
         public ValidationError(string errorCode, string errorMessage)
         {
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
+            this.ErrorCode = errorCode;
+            this.ErrorMessage = errorMessage;
         }
 
         public string ErrorCode { get; }

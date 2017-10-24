@@ -1,26 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using ProductService.Models;
-
 namespace ProductService.DataStore
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using ProductService.Models;
+
     public class ProductDataStore : IProductsDataStore
     {
-        private readonly string _dataPath;
-
-        public ProductDataStore() : this("/../../../ProductService/DataStore/TestData.json")
-        {
-        }
-
-        public ProductDataStore(string dataPath)
-        {
-            _dataPath = dataPath;
-        }
-
         public async Task<IEnumerable<PlpItem>> GetAllItemsAsync()
         {
             return GetItems();
@@ -28,7 +14,7 @@ namespace ProductService.DataStore
 
         private static IEnumerable<PlpItem> GetItems()
         {
-            const string productString = @"[
+            const string ProductString = @"[
                             {   
                                 ""productID"": 123,
                                 ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
@@ -66,19 +52,7 @@ namespace ProductService.DataStore
                             }
                             ]";
 
-            return JsonConvert.DeserializeObject<List<PlpItem>>(productString);
-        }
-
-        private List<PlpItem> LoadJson()
-
-        {
-            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            using (StreamReader r =
-                new StreamReader(currentDirectory + _dataPath))
-            {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<List<PlpItem>>(json);
-            }
+            return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
         }
     }
 }

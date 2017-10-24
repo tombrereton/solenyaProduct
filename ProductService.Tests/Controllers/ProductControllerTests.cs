@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http.Results;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProductService;
-using ProductService.Controllers;
-using Moq;
-using NUnit.Framework;
-using ProductService.DataStore;
-using ProductService.Models;
-using Assert = NUnit.Framework.Assert;
-
-namespace ProductService.Tests.Controllers
+﻿namespace ProductService.Tests.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Web.Http.Results;
+    using Moq;
+    using NUnit.Framework;
+    using ProductService.Controllers;
+    using ProductService.DataStore;
+    using ProductService.Models;
+    using Assert = NUnit.Framework.Assert;
+
     [TestFixture]
-    public class ProductControllerShould
+    public class ProductControllerTests
     {
         private Mock<IProductsDataStore> _productAdapter;
 
@@ -32,7 +28,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Return_OK_response_for_GET_request()
+        public void ReturnOkResponseForGetRequest()
         {
             var plpItems = new List<PlpItem> {CreateTestPlpItem(123), CreateTestPlpItem(345)};
             this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
@@ -43,7 +39,7 @@ namespace ProductService.Tests.Controllers
         }
 
         [Test]
-        public void Return_non_empty_list_of_products()
+        public void ReturnNonEmptyListOfProducts()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -52,13 +48,12 @@ namespace ProductService.Tests.Controllers
             var result = this._productController.GetItems().GetAwaiter().GetResult();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
-            
 
             Assert.NotNull(resultItems);
         }
 
         [Test]
-        public void Return_list_of_items()
+        public void ReturnListOfItems()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
@@ -67,18 +62,17 @@ namespace ProductService.Tests.Controllers
             var result = this._productController.GetItems().GetAwaiter().GetResult();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>) result).Content;
-            
+
             Assert.That(resultItems, Is.EqualTo(plpItems));
         }
 
         [Test]
-        public async Task Return_not_found_result_when_datastore_returns_no_products()
+        public async Task ReturnNotFoundResultWhenDatastoreReturnsNoProducts()
         {
-            var plpItems = new List<PlpItem> {};
 
-            this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(plpItems);
+            this._productAdapter.Setup(x => x.GetAllItemsAsync()).ReturnsAsync(new List<PlpItem>());
 
-            var result = await this._productController.GetItems();
+            var result = await this._productController.GetItems().ConfigureAwait(false);
 
             Assert.IsAssignableFrom<NotFoundResult>(result);
 
