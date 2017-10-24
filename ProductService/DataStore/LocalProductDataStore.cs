@@ -1,44 +1,24 @@
-﻿namespace ProductService.Tests.Integration
+namespace ProductService.DataStore
 {
     using System.Collections.Generic;
-    using System.Web.Http.Results;
+    using System.Threading.Tasks;
     using Newtonsoft.Json;
-    using NUnit.Framework;
-    using ProductService.Controllers;
-    using ProductService.DataStore;
     using ProductService.Models;
 
-    [TestFixture]
-    public class ProductControllerProductDataStoreIntegrationTests
+    /// <summary>
+    /// The product data store.
+    /// </summary>
+    public class LocalProductDataStore : IProductsDataStore
     {
-        private LocalProductDataStore _localProductDataStore;
-        private ProductController _controller;
-
-        [SetUp]
-        public void SetUp()
+        /// <summary>
+        /// The get all items async.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<IEnumerable<PlpItem>> GetAllItemsAsync()
         {
-            this._localProductDataStore = new LocalProductDataStore();
-            this._controller = new ProductController(this._localProductDataStore);
-        }
-
-        [Test]
-        public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
-        {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
-            var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
-
-            // import items from json file and assign to variable
-            var result = GetItems();
-
-            CollectionAssert.AreEqual(responseContents, result);
-        }
-
-        [Test]
-        public void ShouldReturnAllItemsWithControllerAndDatastore()
-        {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
-
-            Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
+            return GetItems();
         }
 
         private static IEnumerable<PlpItem> GetItems()

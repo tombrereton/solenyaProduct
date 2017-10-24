@@ -9,16 +9,16 @@
     using ProductService.Models;
 
     [TestFixture]
-    public class ProductControllerProductDataStoreIntegrationTests
+    public class ProductControllerLocalProductDataStoreIntegrationTests
     {
-        private LocalProductDataStore _localProductDataStore;
+        private ProductDataStore _productDataStore;
         private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            this._localProductDataStore = new LocalProductDataStore();
-            this._controller = new ProductController(this._localProductDataStore);
+            this._productDataStore = new ProductDataStore();
+            this._controller = new ProductController(this._productDataStore);
         }
 
         [Test]

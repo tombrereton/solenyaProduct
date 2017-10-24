@@ -1,44 +1,33 @@
-﻿namespace ProductService.Tests.Integration
+﻿namespace ProductService.Tests.DataStore
 {
     using System.Collections.Generic;
-    using System.Web.Http.Results;
+    using System.Linq;
+
     using Newtonsoft.Json;
     using NUnit.Framework;
-    using ProductService.Controllers;
+
     using ProductService.DataStore;
     using ProductService.Models;
 
     [TestFixture]
-    public class ProductControllerProductDataStoreIntegrationTests
+    public class LocalProductDataStoreTests
     {
         private LocalProductDataStore _localProductDataStore;
-        private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
             this._localProductDataStore = new LocalProductDataStore();
-            this._controller = new ProductController(this._localProductDataStore);
         }
 
         [Test]
-        public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
+        public void ReturnExactListOfItems()
         {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
-            var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
+            var itemsFromDataStore = this._localProductDataStore.GetAllItemsAsync();
 
-            // import items from json file and assign to variable
             var result = GetItems();
 
-            CollectionAssert.AreEqual(responseContents, result);
-        }
-
-        [Test]
-        public void ShouldReturnAllItemsWithControllerAndDatastore()
-        {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
-
-            Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
+            CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), result);
         }
 
         private static IEnumerable<PlpItem> GetItems()
@@ -83,5 +72,5 @@
 
             return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
         }
-    }
+}
 }

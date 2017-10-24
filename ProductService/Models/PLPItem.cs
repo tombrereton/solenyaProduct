@@ -41,16 +41,9 @@ namespace ProductService.Models
                 return false;
             }
 
-            if (this.ProductId != plpItem.ProductId || this.ProductName != plpItem.ProductName
-                || this.SplashImgUrl != plpItem.SplashImgUrl || this.Price != plpItem.Price
-                || this.DiscountPrice != plpItem.DiscountPrice)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return this.ProductId == plpItem.ProductId && this.ProductName == plpItem.ProductName
+                   && this.SplashImgUrl == plpItem.SplashImgUrl && this.Price == plpItem.Price
+                   && this.DiscountPrice == plpItem.DiscountPrice;
         }
 
         public override int GetHashCode()

@@ -23,11 +23,11 @@
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = this._productDataStore.GetAllItemsAsync();
+            var itemsFromDataStore = _productDataStore.GetAllItemsAsync();
 
-            var result = GetItems();
+            var expectedData = GetItems();
 
-            CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), result);
+            CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), expectedData);
         }
 
         private static IEnumerable<PlpItem> GetItems()

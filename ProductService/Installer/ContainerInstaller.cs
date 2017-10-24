@@ -18,7 +18,7 @@ namespace ProductService.Installer
             container.Register(
                 Component
                     .For<IProductsDataStore>()
-                    .ImplementedBy<ProductDataStore>()
+                    .ImplementedBy<LocalProductDataStore>()
                     .LifestyleTransient());
 
             container.Register(
