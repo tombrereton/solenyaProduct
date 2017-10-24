@@ -1,19 +1,15 @@
-using System;
-using System.Drawing;
+// <copyright file="PlpItem.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace ProductService.Models
 {
+    using System.Collections.Generic;
+
     public class PlpItem
     {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public string SplashImgUrl { get; set; }
-        public int Price { get; set; }
-        public int? DiscountPrice { get; set; }
-
         public PlpItem()
         {
-            
         }
 
         public PlpItem(int productId, string productName, string splashImgUrl, int price, int? discountPrice)
@@ -25,18 +21,29 @@ namespace ProductService.Models
             this.DiscountPrice = discountPrice;
         }
 
-        public override bool Equals(Object obj)
-        {
-            PlpItem plpItem = (PlpItem) obj;
-            // Check for null values and compare run-time types.
-            if (plpItem == null || GetType() != plpItem.GetType())
-                return false;
+        public int ProductId { get; }
 
-            if (this.ProductId != plpItem.ProductId ||
-                this.ProductName != plpItem.ProductName ||
-                this.SplashImgUrl != plpItem.SplashImgUrl ||
-                this.Price != plpItem.Price ||
-                this.DiscountPrice != plpItem.DiscountPrice)
+        public string ProductName { get; }
+
+        public string SplashImgUrl { get; }
+
+        public int Price { get; }
+
+        public int? DiscountPrice { get; }
+
+        public override bool Equals(object obj)
+        {
+            var plpItem = (PlpItem)obj;
+
+            // Check for null values and compare run-time types.
+            if (plpItem == null || this.GetType() != plpItem.GetType())
+            {
+                return false;
+            }
+
+            if (this.ProductId != plpItem.ProductId || this.ProductName != plpItem.ProductName
+                || this.SplashImgUrl != plpItem.SplashImgUrl || this.Price != plpItem.Price
+                || this.DiscountPrice != plpItem.DiscountPrice)
             {
                 return false;
             }
@@ -44,6 +51,17 @@ namespace ProductService.Models
             {
                 return true;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -472697689;
+            hashCode = (hashCode * -1521134295) + this.ProductId.GetHashCode();
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(this.ProductName);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(this.SplashImgUrl);
+            hashCode = (hashCode * -1521134295) + this.Price.GetHashCode();
+            hashCode = (hashCode * -1521134295) + EqualityComparer<int?>.Default.GetHashCode(this.DiscountPrice);
+            return hashCode;
         }
     }
 }

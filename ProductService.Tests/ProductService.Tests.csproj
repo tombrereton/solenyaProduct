@@ -107,9 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStore\ProductDataStoreTest.cs" />
-    <Compile Include="Controllers\ProductControllerShould.cs" />
-    <Compile Include="Integration\IntegrationControllerDataStoreTest.cs" />
+    <Compile Include="DataStore\ProductDataStoreTests.cs" />
+    <Compile Include="Controllers\ProductControllerTests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Integration\ProductControllerProductDataStoreIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +125,10 @@
       <Name>ProductService</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
