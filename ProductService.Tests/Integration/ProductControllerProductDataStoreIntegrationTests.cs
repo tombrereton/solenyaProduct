@@ -4,8 +4,6 @@
     using System.Configuration;
     using System.Web.Http.Results;
 
-    using Newtonsoft.Json;
-
     using NUnit.Framework;
 
     using ProductService.Controllers;

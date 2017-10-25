@@ -6,12 +6,7 @@ namespace ProductService.DataStore
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Castle.Windsor.Installer;
-
     using Microsoft.Azure.Documents.Client;
-    using Microsoft.Azure.Documents.Linq;
-
-    using Newtonsoft.Json;
 
     using ProductService.Models;
 

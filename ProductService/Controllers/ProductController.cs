@@ -1,11 +1,6 @@
 ﻿namespace ProductService.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Http;
     using System.Web.Http.Cors;
 
@@ -13,9 +8,6 @@
 
     using ProductService.DataStore;
     using ProductService.Models;
-    using ProductService.Tests.Controllers;
-
-    using Swashbuckle.Swagger.Annotations;
 
     public class ProductController : ApiController
     {

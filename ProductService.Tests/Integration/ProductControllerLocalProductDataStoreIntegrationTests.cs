@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Web.Http.Results;
 
-    using Newtonsoft.Json;
-
     using NUnit.Framework;
 
     using ProductService.Controllers;

@@ -1,17 +1,10 @@
 ﻿namespace ProductService.Tests.DataStore
 {
-    using System.Collections.Generic;
     using System.Configuration;
-    using System.Linq;
-
-    using Microsoft.Azure.Documents.Client;
-
-    using Newtonsoft.Json;
 
     using NUnit.Framework;
 
     using ProductService.DataStore;
-    using ProductService.Models;
 
     [TestFixture]
     public class ProductDataStoreTests

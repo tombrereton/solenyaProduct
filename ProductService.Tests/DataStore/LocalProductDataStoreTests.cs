@@ -1,14 +1,10 @@
 ﻿namespace ProductService.Tests.DataStore
 {
-    using System.Collections.Generic;
     using System.Linq;
-
-    using Newtonsoft.Json;
 
     using NUnit.Framework;
 
     using ProductService.DataStore;
-    using ProductService.Models;
 
     [TestFixture]
     public class LocalProductDataStoreTests
