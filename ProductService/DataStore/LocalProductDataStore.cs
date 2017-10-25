@@ -16,7 +16,7 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<PlpItem>> GetAllItemsAsync()
+        public async Task<IEnumerable<PlpItem>> GetAllPlpItemsAsync()
         {
             return GetItems();
         }
@@ -25,35 +25,35 @@ namespace ProductService.DataStore
         {
             const string ProductString = @"[
                             {   
-                                ""productID"": 123,
+                                ""productID"": 1,
                                 ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
                                 ""splashImgUrl"": ""./static/media/prod1-img1.jpg"",
                                 ""price"": 4600,
                                 ""discountPrice"": """"
                             },
                             { 
-                                ""productID"": 234,
+                                ""productID"": 2,
                                 ""productName"": ""French Connection Checked Lined Harrington Jacket with Borg Collar"",
                                 ""splashImgUrl"": ""./static/media/prod2-img1.jpg"",
                                 ""price"": 6000,
                                 ""discountPrice"": """"
                             },
                             { 
-                                ""productID"": 345,
+                                ""productID"": 3,
                                 ""productName"": ""Adidas Originals Trefoil Hoodie In Grey"",
                                 ""splashImgUrl"": ""./static/media/prod3-img1.jpg"",
                                 ""price"": 5000,
                                 ""discountPrice"": """"
                             },
                             {
-                                ""productID"": 456,
+                                ""productID"": 4,
                                 ""productName"": ""ASOS Body With Plunge Neck Long Sleeve And Thong"",
                                 ""splashImgUrl"": ""./static/media/prod4-img1.jpg"",
-                                ""price"": 1050,
-                                ""discountPrice"": """"
+                                ""price"": 1800,
+                                ""discountPrice"": 1050
                             },
                             { 
-                                ""productID"": 567,
+                                ""productID"": 5,
                                 ""productName"": ""All Saints Oversized Zip Biker Jacket in Leather"",
                                 ""splashImgUrl"": ""./static/media/prod5-img1.jpg"",
                                 ""price"": 42000,

@@ -29,7 +29,7 @@
         public async Task<IHttpActionResult> GetItems()
         {
 
-            var items = await this._productDataStore.GetAllItemsAsync().ConfigureAwait(false) as List<PlpItem>;
+            var items = await this._productDataStore.GetAllPlpItemsAsync().ConfigureAwait(false) as List<PlpItem>;
             if (items.IsNullOrEmpty())
             {
                 return this.NotFound();

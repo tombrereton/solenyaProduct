@@ -19,19 +19,25 @@ namespace ProductService.DataStore
     /// </summary>
     public class ProductDataStore : IProductsDataStore
     {
-        private string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
+        private readonly DocumentClient _client;
 
-        private string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
+        private readonly string _endPointUrl;
 
-        private DocumentClient _client;
+        private readonly string _primaryKey;
+
+        private readonly string _documentDbName;
 
         public ProductDataStore()
         {
         }
 
-        public ProductDataStore(DocumentClient client)
+        public ProductDataStore(string endPointUrl, string primaryKey)
         {
-            this._client = client;
+            this._endPointUrl = endPointUrl;
+            this._primaryKey = primaryKey;
+            this._client = new DocumentClient(new Uri(this._endPointUrl), this._primaryKey);
+            this._documentDbName = ConfigurationManager.AppSettings["DocumentDBName"];
+
         }
 
         /// <summary>
@@ -40,16 +46,15 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<PlpItem>> GetAllItemsAsync()
+        public async Task<IEnumerable<PlpItem>> GetAllPlpItemsAsync()
         {
-            this._client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey);
+            var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
-                UriFactory.CreateDocumentCollectionUri("team-solenya-dev-db", "products"),
+                UriFactory.CreateDocumentCollectionUri(this._documentDbName, documentDBCollection),
                 "SELECT * FROM products",
                 queryOptions);
-            Console.WriteLine("Query data:", productsQueryInSql);
-            
+
             return productsQueryInSql;
         }
     }
