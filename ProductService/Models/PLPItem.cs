@@ -4,6 +4,7 @@
 
 namespace ProductService.Models
 {
+    using System;
     using System.Collections.Generic;
 
     public class PlpItem
@@ -21,17 +22,17 @@ namespace ProductService.Models
             this.DiscountPrice = discountPrice;
         }
 
-        public int ProductId { get; }
+        public int ProductId { get; set; }
 
-        public string ProductName { get; }
+        public string ProductName { get; set; }
 
-        public string SplashImgUrl { get; }
+        public string SplashImgUrl { get; set; }
 
-        public int Price { get; }
+        public int Price { get; set; }
 
-        public int? DiscountPrice { get; }
+        public int? DiscountPrice { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(Object obj)
         {
             var plpItem = (PlpItem)obj;
 

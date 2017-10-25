@@ -1,7 +1,12 @@
 namespace ProductService.DataStore
 {
+    using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
     using System.Threading.Tasks;
+
+    using Castle.Windsor.Installer;
 
     using Microsoft.Azure.Documents.Client;
 
@@ -14,7 +19,15 @@ namespace ProductService.DataStore
     /// </summary>
     public class ProductDataStore : IProductsDataStore
     {
+        private string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
+
+        private string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
+
         private DocumentClient _client;
+
+        public ProductDataStore()
+        {
+        }
 
         public ProductDataStore(DocumentClient client)
         {
@@ -29,7 +42,15 @@ namespace ProductService.DataStore
         /// </returns>
         public async Task<IEnumerable<PlpItem>> GetAllItemsAsync()
         {
-            return null;
+            this._client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey);
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+            IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
+                UriFactory.CreateDocumentCollectionUri("team-solenya-dev-db", "products"),
+                "SELECT * FROM products",
+                queryOptions);
+            Console.WriteLine("Query data:", productsQueryInSql);
+            
+            return productsQueryInSql;
         }
     }
 }

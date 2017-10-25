@@ -34,39 +34,39 @@
         {
             const string ProductString = @"[
                             {   
-                                ""productID"": 123,
-                                ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
-                                ""splashImgUrl"": ""./static/media/prod1-img1.jpg"",
-                                ""price"": 4600,
-                                ""discountPrice"": """"
+                                ""ProductId"": 1,
+                                ""ProductName"": ""Warehouse Side Split Roll Neck Jumper"",
+                                ""SplashImgUrl"": ""./static/media/prod1-img1.jpg"",
+                                ""Price"": 4600,
+                                ""DiscountPrice"": """"
                             },
                             { 
-                                ""productID"": 234,
-                                ""productName"": ""French Connection Checked Lined Harrington Jacket with Borg Collar"",
-                                ""splashImgUrl"": ""./static/media/prod2-img1.jpg"",
-                                ""price"": 6000,
-                                ""discountPrice"": """"
+                                ""ProductId"": 2,
+                                ""ProductName"": ""French Connection Checked Lined Harrington Jacket with Borg Collar"",
+                                ""SplashImgUrl"": ""./static/media/prod2-img1.jpg"",
+                                ""Price"": 6000,
+                                ""DiscountPrice"": """"
                             },
                             { 
-                                ""productID"": 345,
-                                ""productName"": ""Adidas Originals Trefoil Hoodie In Grey"",
-                                ""splashImgUrl"": ""./static/media/prod3-img1.jpg"",
-                                ""price"": 5000,
-                                ""discountPrice"": """"
+                                ""ProductId"": 3,
+                                ""ProductName"": ""Adidas Originals Trefoil Hoodie In Grey"",
+                                ""SplashImgUrl"": ""./static/media/prod3-img1.jpg"",
+                                ""Price"": 5000,
+                                ""DiscountPrice"": """"
                             },
                             {
-                                ""productID"": 456,
-                                ""productName"": ""ASOS Body With Plunge Neck Long Sleeve And Thong"",
-                                ""splashImgUrl"": ""./static/media/prod4-img1.jpg"",
-                                ""price"": 1050,
-                                ""discountPrice"": """"
+                                ""ProductId"": 4,
+                                ""ProductName"": ""ASOS Body With Plunge Neck Long Sleeve And Thong"",
+                                ""SplashImgUrl"": ""./static/media/prod4-img1.jpg"",
+                                ""Price"": 1050,
+                                ""DiscountPrice"": """"
                             },
                             { 
-                                ""productID"": 567,
-                                ""productName"": ""All Saints Oversized Zip Biker Jacket in Leather"",
-                                ""splashImgUrl"": ""./static/media/prod5-img1.jpg"",
-                                ""price"": 42000,
-                                ""discountPrice"": """"
+                                ""ProductId"": 5,
+                                ""ProductName"": ""All Saints Oversized Zip Biker Jacket in Leather"",
+                                ""SplashImgUrl"": ""./static/media/prod5-img1.jpg"",
+                                ""Price"": 42000,
+                                ""DiscountPrice"": """"
                             }
                             ]";
 

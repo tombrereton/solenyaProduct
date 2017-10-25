@@ -11,14 +11,14 @@
     [TestFixture]
     public class ProductControllerLocalProductDataStoreIntegrationTests
     {
-        private ProductDataStore _productDataStore;
+        private LocalProductDataStore _localProductDataStore;
         private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            this._productDataStore = new ProductDataStore();
-            this._controller = new ProductController(this._productDataStore);
+            this._localProductDataStore = new LocalProductDataStore();
+            this._controller = new ProductController(this._localProductDataStore);
         }
 
         [Test]
