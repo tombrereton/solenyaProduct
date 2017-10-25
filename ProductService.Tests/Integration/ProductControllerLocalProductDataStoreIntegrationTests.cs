@@ -1,7 +1,6 @@
 ﻿namespace ProductService.Tests.Integration
 {
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Web.Http.Results;
 
     using NUnit.Framework;
@@ -12,21 +11,17 @@
     using ProductService.Tests.DataStore;
 
     [TestFixture]
-    public class ProductControllerProductDataStoreIntegrationTests
+    public class ProductControllerLocalProductDataStoreIntegrationTests
     {
-        private ProductDataStore _productDataStore;
+        private LocalProductDataStore _localProductDataStore;
 
         private ProductController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
-
-            string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
-
-            this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
-            this._controller = new ProductController(this._productDataStore);
+            this._localProductDataStore = new LocalProductDataStore();
+            this._controller = new ProductController(this._localProductDataStore);
         }
 
         [Test]

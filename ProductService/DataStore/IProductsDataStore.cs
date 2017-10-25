@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ProductService.Models;
-
 namespace ProductService.DataStore
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using ProductService.Models;
+
     public interface IProductsDataStore
     {
-        Task<IEnumerable<PlpItem>> GetAllItemsAsync();
+        IEnumerable<PlpItem> GetAllPlpItems();
     }
 }
