@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using ProductService.DataStore;
-
-namespace ProductService.Installer
+﻿namespace ProductService.Installer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Http;
+    using Castle.MicroKernel.Registration;
+    using Castle.Windsor;
+    using ProductService.DataStore;
+
     public class ContainerInstaller
     {
         public static WindsorContainer Init()
@@ -18,7 +19,10 @@ namespace ProductService.Installer
             container.Register(
                 Component
                     .For<IProductsDataStore>()
-                    .ImplementedBy<LocalProductDataStore>()
+                    .ImplementedBy<ProductDataStore>()
+                    .DependsOn(
+                        Dependency.OnAppSettingsValue("endPointUrl", "DocumentDBEndpoint"),
+                        Dependency.OnAppSettingsValue("primaryKey", "DocumentDBPrimaryKey"))
                     .LifestyleTransient());
 
             container.Register(
