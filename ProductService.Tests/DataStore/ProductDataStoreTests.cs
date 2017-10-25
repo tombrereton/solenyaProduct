@@ -31,12 +31,11 @@
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = _productDataStore.GetAllPlpItemsAsync();
-            var actualData = itemsFromDataStore.Result.ToList();
+            var itemsFromDataStore = _productDataStore.GetAllPlpItems();
 
             var expectedData = TestData.GetItems();
 
-            CollectionAssert.AreEqual(actualData, expectedData);
+            CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
         }
     }
 }

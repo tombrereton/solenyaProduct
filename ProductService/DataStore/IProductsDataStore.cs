@@ -6,6 +6,6 @@ namespace ProductService.DataStore
 {
     public interface IProductsDataStore
     {
-        Task<IEnumerable<PlpItem>> GetAllPlpItemsAsync();
+        IEnumerable<PlpItem> GetAllPlpItems();
     }
 }

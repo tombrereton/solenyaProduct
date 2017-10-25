@@ -9,6 +9,7 @@ namespace ProductService.DataStore
     using Castle.Windsor.Installer;
 
     using Microsoft.Azure.Documents.Client;
+    using Microsoft.Azure.Documents.Linq;
 
     using Newtonsoft.Json;
 
@@ -37,7 +38,6 @@ namespace ProductService.DataStore
             this._primaryKey = primaryKey;
             this._client = new DocumentClient(new Uri(this._endPointUrl), this._primaryKey);
             this._documentDbName = ConfigurationManager.AppSettings["DocumentDBName"];
-
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<PlpItem>> GetAllPlpItemsAsync()
+        public IEnumerable<PlpItem> GetAllPlpItems()
         {
             var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
@@ -55,7 +55,7 @@ namespace ProductService.DataStore
                 "SELECT * FROM products",
                 queryOptions);
 
-            return productsQueryInSql;
+            return productsQueryInSql.ToList<PlpItem>();
         }
     }
 }

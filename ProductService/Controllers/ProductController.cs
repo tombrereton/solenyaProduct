@@ -8,10 +8,13 @@
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.Cors;
+
     using Castle.Core.Internal;
+
     using ProductService.DataStore;
     using ProductService.Models;
     using ProductService.Tests.Controllers;
+
     using Swashbuckle.Swagger.Annotations;
 
     public class ProductController : ApiController
@@ -26,16 +29,15 @@
         [Route("")]
         [HttpGet]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public async Task<IHttpActionResult> GetItems()
+        public IHttpActionResult GetItems()
         {
-
-            var items = await this._productDataStore.GetAllPlpItemsAsync().ConfigureAwait(false) as List<PlpItem>;
+            var items = this._productDataStore.GetAllPlpItems() as List<PlpItem>;
             if (items.IsNullOrEmpty())
             {
                 return this.NotFound();
             }
+
             return this.Ok(items);
         }
-
     }
 }

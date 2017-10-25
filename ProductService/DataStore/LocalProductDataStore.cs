@@ -16,7 +16,7 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<PlpItem>> GetAllPlpItemsAsync()
+        public IEnumerable<PlpItem> GetAllPlpItems()
         {
             return GetItems();
         }

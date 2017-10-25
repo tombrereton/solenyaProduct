@@ -24,11 +24,11 @@
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = this._localProductDataStore.GetAllPlpItemsAsync();
+            var itemsFromDataStore = this._localProductDataStore.GetAllPlpItems();
 
             var result = TestData.GetItems();
 
-            CollectionAssert.AreEqual(itemsFromDataStore.Result.ToList(), result);
+            CollectionAssert.AreEqual(itemsFromDataStore.ToList(), result);
         }
     }
 }

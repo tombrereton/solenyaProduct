@@ -29,7 +29,7 @@
         [Test]
         public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
         {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
+            var response = this._controller.GetItems();
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
@@ -41,7 +41,7 @@
         [Test]
         public void ShouldReturnAllItemsWithControllerAndDatastore()
         {
-            var response = this._controller.GetItems().GetAwaiter().GetResult();
+            var response = this._controller.GetItems();
 
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }

@@ -35,9 +35,9 @@
         public void ReturnOkResponseForGetRequest()
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
-            this._productAdapter.Setup(x => x.GetAllPlpItemsAsync()).ReturnsAsync(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
 
-            var result = this._productController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems();
 
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
@@ -47,9 +47,9 @@
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItemsAsync()).ReturnsAsync(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
 
-            var result = this._productController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>)result).Content;
 
@@ -61,9 +61,9 @@
         {
             var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItemsAsync()).ReturnsAsync(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
 
-            var result = this._productController.GetItems().GetAwaiter().GetResult();
+            var result = this._productController.GetItems();
 
             var resultItems = ((OkNegotiatedContentResult<List<PlpItem>>)result).Content;
 
@@ -73,9 +73,9 @@
         [Test]
         public async Task ReturnNotFoundResultWhenDatastoreReturnsNoProducts()
         {
-            this._productAdapter.Setup(x => x.GetAllPlpItemsAsync()).ReturnsAsync(new List<PlpItem>());
+            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(new List<PlpItem>());
 
-            var result = await this._productController.GetItems().ConfigureAwait(false);
+            var result = this._productController.GetItems();
 
             Assert.IsAssignableFrom<NotFoundResult>(result);
         }
