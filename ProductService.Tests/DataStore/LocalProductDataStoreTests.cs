@@ -22,7 +22,7 @@
         {
             var itemsFromDataStore = this._localProductDataStore.GetAllPlpItems();
 
-            var result = TestData.GetItems();
+            var result = TestData.GetLocalItems();
 
             CollectionAssert.AreEqual(itemsFromDataStore.ToList(), result);
         }
