@@ -31,7 +31,7 @@
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
-            var result = TestData.GetItems();
+            var result = TestData.GetLocalItems();
 
             CollectionAssert.AreEqual(responseContents, result);
         }

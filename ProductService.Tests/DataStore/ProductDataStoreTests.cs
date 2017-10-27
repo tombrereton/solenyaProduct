@@ -26,7 +26,7 @@
         {
             var itemsFromDataStore = _productDataStore.GetAllPlpItems();
 
-            var expectedData = TestData.GetItems();
+            var expectedData = TestData.GetDBItems();
 
             CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
         }
