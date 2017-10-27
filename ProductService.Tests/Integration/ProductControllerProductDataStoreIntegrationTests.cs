@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Threading.Tasks;
     using System.Web.Http.Results;
 
     using NUnit.Framework;
@@ -17,6 +19,20 @@
         private ProductDataStore _productDataStore;
 
         private ProductController _controller;
+
+        private ResourceSetUp _resourceSetUp;
+
+        private IEnumerable<PlpItem> _testItem;
+
+        [SetUp]
+        public async Task RSetUp()
+        {
+            this._controller = new ProductController(new ProductDataStore());
+            this._testItem = TestData.GetDBItems();
+            this._resourceSetUp = new ResourceSetUp();
+            await this._resourceSetUp.SetUpDb();
+           // await this._resourceSetUp.TearDown();
+        }
 
         [SetUp]
         public void SetUp()
@@ -38,7 +54,7 @@
             // import items from json file and assign to variable
             var result = TestData.GetDBItems();
 
-            CollectionAssert.AreEqual(responseContents, result);
+            CollectionAssert.AreEqual(result, responseContents);
         }
 
         [Test]
@@ -48,5 +64,10 @@
 
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
+//
+//        [Test]
+//        public void ShouldReturnDataMatchingDataFromTestData()
+//        {
+//        }
     }
 }

@@ -59,6 +59,8 @@ namespace ProductService.Models
         {
             public int VariantId { get; set; }
 
+            public Variant() { }
+
             public Variant(int id)
             {
                 this.VariantId = id;
