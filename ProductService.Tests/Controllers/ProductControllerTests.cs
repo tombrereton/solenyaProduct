@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Http.Results;
-    
 
     using Moq;
 
@@ -81,14 +80,6 @@
             Assert.IsAssignableFrom<NotFoundResult>(result);
         }
 
-        [Test]
-        public void CreatesAPdpItem()
-        {
-            var pdpItem = CreateTestPdpItem(123);
-
-            System.Console.Write(pdpItem);
-
-        }
         // Add test to check if data has been hard coded
         private static PlpItem CreateTestPlpItem(int id)
         {
@@ -105,14 +96,13 @@
             string imageUrl = "Test URL";
             int price = 2000;
             int discountPrice = 1500;
-            List<int> variants = { 1, 2, 3 };
-            Images imageOptions = new Images("red", new List<string>{ "a","b","c"} );
+            PdpItem.Variant[] variants = new PdpItem.Variant[] {new PdpItem.Variant(1)};
+            PdpItem.Image[] imageOptions = new PdpItem.Image[]{new PdpItem.Image("red", new string[] { "a", "b", "c" })};
             string productDescription = "Test Description";
             string productBrand = "Test Brand Name";
             string brandDescription = "Test Brand Description";
             string materials = "Test Materials";
             string gender = "Test Gender";
-
 
             return new PdpItem(id, productName, imageUrl, price, discountPrice, variants, imageOptions, productDescription, productBrand, brandDescription, materials, gender);
         }
