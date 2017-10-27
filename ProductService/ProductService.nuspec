@@ -9,6 +9,6 @@
     <tags></tags>
     </metadata>
     <files>
-        <file src="bin\Debug\**" target="" />
+        <file src="bin\Release\**" target="" />
         </files>
 </package>
