@@ -28,7 +28,7 @@
         public async Task RSetUp()
         {
             this._controller = new ProductController(new ProductDataStore());
-            this._testItem = TestData.GetItems();
+            this._testItem = TestData.GetDBItems();
             this._resourceSetUp = new ResourceSetUp();
             await this._resourceSetUp.SetUpDb();
            // await this._resourceSetUp.TearDown();
