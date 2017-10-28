@@ -30,10 +30,15 @@
             }
         }
 
-        public static List<PdpItem> GeneratePdpItemTestData()
+        private static List<PdpItem> GeneratePdpItemTestData()
         {
-            // TODO: create a list of PdpItems
-            return new List<PdpItem>();
+            var pdpItem1 = CreateTestPdpItem(123);
+            var pdpItem2 = CreateTestPdpItem(234);
+            var pdpItem3 = CreateTestPdpItem(345);
+
+            var pdpItems = new List<PdpItem> { pdpItem1, pdpItem2, pdpItem3 };
+
+            return pdpItems;
         }
 
         public static IEnumerable<PlpItem> GetDBItems()
@@ -120,6 +125,44 @@
                             ]";
 
             return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
+        }
+
+        public static PlpItem CreateTestPlpItem(int id)
+        {
+            string productName = "Test Product";
+            string imageUrl = "Test URL";
+            int price = 2000;
+            int discountPrice = 1500;
+            return new PlpItem(id, productName, imageUrl, price, discountPrice);
+        }
+
+        private static PdpItem CreateTestPdpItem(int id)
+        {
+            string productName = "Test Product";
+            string imageUrl = "Test URL";
+            int price = 2000;
+            int discountPrice = 1500;
+            PdpItem.Variant[] variants = new[] { new PdpItem.Variant(1) };
+            PdpItem.Image[] imageOptions = new[] { new PdpItem.Image("red", new[] { "a", "b", "c" }) };
+            string productDescription = "Test Description";
+            string productBrand = "Test Brand Name";
+            string brandDescription = "Test Brand Description";
+            string materials = "Test Materials";
+            string gender = "Test Gender";
+
+            return new PdpItem(
+                id,
+                productName,
+                imageUrl,
+                price,
+                discountPrice,
+                variants,
+                imageOptions,
+                productDescription,
+                productBrand,
+                brandDescription,
+                materials,
+                gender);
         }
     }
 }
