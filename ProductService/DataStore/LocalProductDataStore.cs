@@ -1,5 +1,6 @@
 namespace ProductService.DataStore
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
@@ -19,6 +20,21 @@ namespace ProductService.DataStore
         public IEnumerable<PlpItem> GetAllPlpItems()
         {
             return GetItems();
+        }
+
+        public Task RemoveDocumentCollection(string collectionName)
+        {
+            return null;
+        }
+
+        public Task CreateDocumentCollection(string collectionName)
+        {
+            return null;
+        }
+
+        public Task CreatePdpDocumentIfNotExists(string collectionName, PdpItem pdpItem)
+        {
+            return null;
         }
 
         private static IEnumerable<PlpItem> GetItems()

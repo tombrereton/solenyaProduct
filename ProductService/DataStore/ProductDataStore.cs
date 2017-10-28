@@ -4,8 +4,10 @@ namespace ProductService.DataStore
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
 
+    using Microsoft.Azure.Documents;
     using Microsoft.Azure.Documents.Client;
 
     using ProductService.Models;
@@ -15,13 +17,16 @@ namespace ProductService.DataStore
     /// </summary>
     public class ProductDataStore : IProductsDataStore
     {
-        private readonly DocumentClient _client;
-
         private readonly string _endPointUrl;
 
         private readonly string _primaryKey;
 
         private readonly string _documentDbName;
+
+        /// <summary>
+        /// Gets the _client.
+        /// </summary>
+        public DocumentClient _client { get; }
 
         public ProductDataStore()
         {
@@ -51,6 +56,56 @@ namespace ProductService.DataStore
                 queryOptions);
 
             return productsQueryInSql.ToList<PlpItem>();
+        }
+
+        public async Task RemoveDocumentCollection(string collectionName)
+        {
+            try
+            {
+                await this._client
+                    .DeleteDocumentCollectionAsync(
+                        UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName))
+                    .ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Deleting collection in DB exception: {0}", exception);
+            }
+        }
+
+        public async Task CreateDocumentCollection(string collectionName)
+        {
+            await this._client.CreateDocumentCollectionIfNotExistsAsync(
+                UriFactory.CreateDatabaseUri(this._documentDbName),
+                new DocumentCollection { Id = "test_data" }).ConfigureAwait(false);
+        }
+
+        public async Task CreatePdpDocumentIfNotExists(string collectionName, PdpItem pdpItem)
+        {
+            try
+            {
+                await this._client.ReadDocumentAsync(
+                        UriFactory.CreateDocumentUri(
+                            this._documentDbName,
+                            collectionName,
+                            pdpItem.ProductId.ToString()))
+                    .ConfigureAwait(false);
+                Console.WriteLine("Found {0}", pdpItem.ProductId);
+            }
+            catch (DocumentClientException de)
+            {
+                if (de.StatusCode == HttpStatusCode.NotFound)
+                {
+                    await this._client.CreateDocumentAsync(
+                        UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
+                        pdpItem).ConfigureAwait(false);
+                    Console.WriteLine("Created PdpItem {0}", pdpItem.ProductId);
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }

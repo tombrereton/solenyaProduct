@@ -1,13 +1,41 @@
-﻿namespace ProductService.Tests.DataStore
+﻿namespace ProductService.Tests.TestData
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
 
     using Newtonsoft.Json;
 
+    using ProductService.DataStore;
     using ProductService.Models;
 
     public class TestData
     {
+        public static async Task TearDownDBTestData(IProductsDataStore productDataStore)
+        {
+            string testDataCollection = "test_data_product";
+            await productDataStore.RemoveDocumentCollection(testDataCollection).ConfigureAwait(false);
+        }
+
+        public static async Task SetUpDBWithTestData(IProductsDataStore productDataStore)
+        {
+            string testDataCollection = "test_data_product";
+            await productDataStore.CreateDocumentCollection(testDataCollection).ConfigureAwait(false);
+
+            var testDataItems = GeneratePdpItemTestData();
+            foreach (PdpItem testDataItem in testDataItems)
+            {
+                await productDataStore.CreatePdpDocumentIfNotExists(testDataCollection, testDataItem)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        public static List<PdpItem> GeneratePdpItemTestData()
+        {
+            // TODO: create a list of PdpItems
+            return new List<PdpItem>();
+        }
+
         public static IEnumerable<PlpItem> GetDBItems()
         {
             const string ProductString = @"[

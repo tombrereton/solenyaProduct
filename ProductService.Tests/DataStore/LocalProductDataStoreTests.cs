@@ -5,6 +5,7 @@
     using NUnit.Framework;
 
     using ProductService.DataStore;
+    using ProductService.Tests.TestData;
 
     [TestFixture]
     public class LocalProductDataStoreTests
