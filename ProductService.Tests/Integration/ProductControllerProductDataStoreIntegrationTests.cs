@@ -26,6 +26,8 @@
 
         private IEnumerable<PlpItem> _testItem;
 
+        private readonly string _collectionName = "test_data_product";
+
         [SetUp]
         public void SetUp()
         {
@@ -35,18 +37,18 @@
             this._productDataStore = new ProductDataStore(endpointUrl, primaryKey);
             this._controller = new ProductController(this._productDataStore);
 
-            TestData.TearDownDBTestData(this._productDataStore).Wait();
-            TestData.SetUpDBWithTestData(this._productDataStore).Wait();
+            TestData.TearDownDBTestData(this._productDataStore);
+            TestData.SetUpDBWithTestData(this._productDataStore);
         }
 
         [Test]
         public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
         {
-            var response = this._controller.GetItems();
+            var response = this._controller.GetItems(this._collectionName);
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
-            var result = TestData.GetDBItems();
+            var result = TestData.GeneratePlpItemTestData();
 
             CollectionAssert.AreEqual(result, responseContents);
         }
@@ -54,7 +56,7 @@
         [Test]
         public void ShouldReturnAllItemsWithControllerAndDatastore()
         {
-            var response = this._controller.GetItems();
+            var response = this._controller.GetItems(this._collectionName);
 
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }

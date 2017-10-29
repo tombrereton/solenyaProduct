@@ -7,7 +7,7 @@ namespace ProductService.DataStore
 
     public interface IProductsDataStore
     {
-        IEnumerable<PlpItem> GetAllPlpItems();
+        IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName);
 
         Task RemoveDocumentCollection(string collectionName);
 

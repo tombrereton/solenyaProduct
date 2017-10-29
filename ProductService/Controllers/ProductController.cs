@@ -21,9 +21,9 @@
         [Route("")]
         [HttpGet]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult GetItems()
+        public IHttpActionResult GetItems(string collectionName = "products")
         {
-            var items = this._productDataStore.GetAllPlpItems() as List<PlpItem>;
+            var items = this._productDataStore.GetAllPlpItemsFromCollection(collectionName) as List<PlpItem>;
             if (items.IsNullOrEmpty())
             {
                 return this.NotFound();

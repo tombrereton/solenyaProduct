@@ -36,7 +36,7 @@
         public void ReturnOkResponseForGetRequest()
         {
             var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -48,7 +48,7 @@
         {
             var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -62,7 +62,7 @@
         {
             var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -74,7 +74,8 @@
         [Test]
         public async Task ReturnNotFoundResultWhenDatastoreReturnsNoProducts()
         {
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(new List<PlpItem>());
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("test_data_product"))
+                .Returns(new List<PlpItem>());
 
             var result = this._productController.GetItems();
 

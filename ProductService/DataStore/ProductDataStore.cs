@@ -46,12 +46,12 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public IEnumerable<PlpItem> GetAllPlpItems()
+        public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
             var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
-                UriFactory.CreateDocumentCollectionUri(this._documentDbName, documentDBCollection),
+                UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
                 "SELECT * FROM products",
                 queryOptions);
 
@@ -77,7 +77,7 @@ namespace ProductService.DataStore
         {
             await this._client.CreateDocumentCollectionIfNotExistsAsync(
                 UriFactory.CreateDatabaseUri(this._documentDbName),
-                new DocumentCollection { Id = "test_data" }).ConfigureAwait(false);
+                new DocumentCollection { Id = collectionName }).ConfigureAwait(false);
         }
 
         public async Task CreatePdpDocumentIfNotExists(string collectionName, PdpItem pdpItem)

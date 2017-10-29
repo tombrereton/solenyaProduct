@@ -3,7 +3,9 @@ namespace ProductService.DataStore
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Newtonsoft.Json;
+
     using ProductService.Models;
 
     /// <summary>
@@ -17,7 +19,7 @@ namespace ProductService.DataStore
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public IEnumerable<PlpItem> GetAllPlpItems()
+        public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
             return GetItems();
         }

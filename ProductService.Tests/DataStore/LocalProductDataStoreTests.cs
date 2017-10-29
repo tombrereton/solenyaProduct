@@ -21,7 +21,7 @@
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = this._localProductDataStore.GetAllPlpItems();
+            var itemsFromDataStore = this._localProductDataStore.GetAllPlpItemsFromCollection("test_data_product");
 
             var result = TestData.GetLocalItems();
 
