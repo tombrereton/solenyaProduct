@@ -179,7 +179,7 @@
             {
                 ProductId = 1,
                 ProductName = "Warehouse Side Split Roll Neck Jumper",
-                SplashImgUrl = "./products/product1/prod1-img1.jpg",
+                SplashImgUrl = "./static/media/prod1-img1.jpg",
                 Price = 4600,
                 DiscountPrice = null,
                 Variants = new PdpItem.Variant[]
@@ -217,10 +217,10 @@
                                                                     Colour = "Olive marl",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product1/prod1-img1.jpg",
-                                                                                        "./products/product1/prod1-img2.jpg",
-                                                                                        "./products/product1/prod1-img3.jpg",
-                                                                                        "./products/product1/prod1-img4.jpg",
+                                                                                        "./static/media/prod1-img1.jpg",
+                                                                                        "./static/media/prod1-img2.jpg",
+                                                                                        "./static/media/prod1-img3.jpg",
+                                                                                        "./static/media/prod1-img4.jpg",
                                                                                     }
                                                                 }
                                                         },
@@ -236,7 +236,7 @@
             {
                 ProductId = 2,
                 ProductName = "French Connection Checked Lined Harrington Jacket with Borg Collar",
-                SplashImgUrl = "./products/product2/prod2-img1.jpg",
+                SplashImgUrl = "./static/media/prod2-img1.jpg",
                 Price = 12000,
                 DiscountPrice = 6000,
                 Variants = new PdpItem.Variant[]
@@ -273,10 +273,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product2/prod2-img1.jpg",
-                                                                                        "./products/product2/prod2-img2.jpg",
-                                                                                        "./products/product2/prod2-img3.jpg",
-                                                                                        "./products/product2/prod1-img4.jpg",
+                                                                                        "./static/media/prod2-img1.jpg",
+                                                                                        "./static/media/prod2-img2.jpg",
+                                                                                        "./static/media/prod2-img3.jpg",
+                                                                                        "./static/media/prod1-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
@@ -290,8 +290,8 @@
             PdpItem pdpItem3 = new PdpItem
             {
                 ProductId = 3,
-                ProductName = "adidas Originals Trefoil Hoodie",
-                SplashImgUrl = "./products/product3/prod3-img1.jpg",
+                ProductName = "Adidas Originals Trefoil Hoodie",
+                SplashImgUrl = "./static/media/prod3-img1.jpg",
                 Price = 5000,
                 DiscountPrice = null,
                 Variants = new PdpItem.Variant[] {
@@ -351,10 +351,10 @@
                                                                     Colour = "Grey",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product3/prod3-img1.jpg",
-                                                                                        "./products/product3/prod3-img2.jpg",
-                                                                                        "./products/product3/prod3-img3.jpg",
-                                                                                        "./products/product3/prod3-img4.jpg",
+                                                                                        "./static/media/prod3-img1.jpg",
+                                                                                        "./static/media/prod3-img2.jpg",
+                                                                                        "./static/media/prod3-img3.jpg",
+                                                                                        "./static/media/prod3-img4.jpg",
                                                                                     }
                                                                 },
                                                              new PdpItem.Image
@@ -362,10 +362,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product3/prod3-img5.jpg",
-                                                                                        "./products/product3/prod3-img6.jpg",
-                                                                                        "./products/product3/prod3-img7.jpg",
-                                                                                        "./products/product3/prod3-img8.jpg",
+                                                                                        "./static/media/prod3-img5.jpg",
+                                                                                        "./static/media/prod3-img6.jpg",
+                                                                                        "./static/media/prod3-img7.jpg",
+                                                                                        "./static/media/prod3-img8.jpg",
                                                                                     }
                                                                 }
 
@@ -381,7 +381,7 @@
             {
                 ProductId = 4,
                 ProductName = "ASOS Body With Plunge Neck Long Sleeve And Thong",
-                SplashImgUrl = "./products/product4/prod4-img1.jpg",
+                SplashImgUrl = "./static/media/prod4-img1.jpg",
                 Price = 1800,
                 DiscountPrice = 1050,
                 Variants = new PdpItem.Variant[]
@@ -418,10 +418,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product4/prod4-img1.jpg",
-                                                                                        "./products/product4/prod4-img2.jpg",
-                                                                                        "./products/product4/prod4-img3.jpg",
-                                                                                        "./products/product4/prod4-img4.jpg",
+                                                                                        "./static/media/prod4-img1.jpg",
+                                                                                        "./static/media/prod4-img2.jpg",
+                                                                                        "./static/media/prod4-img3.jpg",
+                                                                                        "./static/media/prod4-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
@@ -436,7 +436,7 @@
             {
                 ProductId = 5,
                 ProductName = "All Saints Oversized Zip Biker Jacket in Leather",
-                SplashImgUrl = "./products/product5/prod5-img1.jpg",
+                SplashImgUrl = "./static/media/prod5-img1.jpg",
                 Price = 42000,
                 DiscountPrice = null,
                 Variants = new PdpItem.Variant[]
@@ -465,10 +465,10 @@
                                                                     Colour = "Aries white",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./products/product5/prod5-img1.jpg",
-                                                                                        "./products/product5/prod5-img2.jpg",
-                                                                                        "./products/product5/prod5-img3.jpg",
-                                                                                        "./products/product5/prod5-img4.jpg",
+                                                                                        "./static/media/prod5-img1.jpg",
+                                                                                        "./static/media/prod5-img2.jpg",
+                                                                                        "./static/media/prod5-img3.jpg",
+                                                                                        "./static/media/prod5-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },

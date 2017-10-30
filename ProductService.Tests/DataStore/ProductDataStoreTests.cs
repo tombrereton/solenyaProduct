@@ -5,6 +5,7 @@
     using NUnit.Framework;
 
     using ProductService.DataStore;
+    using ProductService.Models;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -35,9 +36,5 @@
             CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
         }
 
-        [Test]
-        public void PopulateDatabase()
-        {
-        }
     }
 }
