@@ -31,5 +31,17 @@
 
             return this.Ok(items);
         }
+
+        public IHttpActionResult GetItem(int id, string collectionName = "products")
+        {
+            var item = this._productDataStore.GetPdpItemFromCollection(collectionName, id) as List<PdpItem>;
+            if (item.IsNullOrEmpty())
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(item);
+
+        }
     }
 }

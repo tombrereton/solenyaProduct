@@ -83,5 +83,56 @@
         }
 
         // Add test to check if data has been hard coded
+
+        [Test]
+        public void ReturnOnePdpItemById()
+        {
+            var pdpItem = new List<PdpItem> {TestData.CreateTestPdpItem(123) };
+
+            this._productAdapter.Setup(x => x.GetPdpItemFromCollection("products", 123)).Returns(pdpItem);
+
+            var result = this._productController.GetItem(123);
+
+            var resultItem = ((OkNegotiatedContentResult<List<PdpItem>>)result).Content;
+
+            Assert.That(resultItem, Is.EqualTo(pdpItem));
+
+        }
+
+        [Test]
+        public void ReturnNotFoundResponseIfProductNotFound()
+        {
+            this._productAdapter.Setup(x => x.GetPdpItemFromCollection("test_data_product", 123))
+                .Returns(new List<PdpItem>());
+
+            var result = this._productController.GetItem(123);
+
+            Assert.IsAssignableFrom<NotFoundResult>(result);
+        }
+
+        [Test]
+        public void ReturnsNotNullObjectWhenRequestedByValidId()
+        {
+            var pdpItem = new List<PdpItem> { TestData.CreateTestPdpItem(123) };
+
+            this._productAdapter.Setup(x => x.GetPdpItemFromCollection("products", 123)).Returns(pdpItem);
+
+            var result = this._productController.GetItem(123);
+
+            var resultItem = ((OkNegotiatedContentResult<List<PdpItem>>)result).Content;
+
+            Assert.NotNull(resultItem);
+        }
+
+        [Test]
+        public void ReturnsOkResponseIfProductIsFoundById()
+        {
+            var pdpItem = new List<PdpItem> { TestData.CreateTestPdpItem(123) };
+            this._productAdapter.Setup(x => x.GetPdpItemFromCollection("products", 123)).Returns(pdpItem);
+
+            var result = this._productController.GetItem(123);
+
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<PdpItem>>>());
+        }
     }
 }
