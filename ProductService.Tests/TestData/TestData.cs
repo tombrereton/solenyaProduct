@@ -11,21 +11,19 @@
 
     public class TestData
     {
-        public static void TearDownDBTestData(IProductsDataStore productDataStore)
+        public static void TearDownDBTestData(IProductsDataStore productDataStore, string collectionName)
         {
-            string testDataCollection = "test_data_product";
-            productDataStore.RemoveDocumentCollection(testDataCollection).Wait();
+            productDataStore.RemoveDocumentCollection(collectionName).Wait();
         }
 
-        public static void SetUpDBWithTestData(IProductsDataStore productDataStore)
+        public static void SetUpDBWithTestData(IProductsDataStore productDataStore, string collectionName)
         {
-            string testDataCollection = "test_data_product";
-            productDataStore.CreateDocumentCollection(testDataCollection).Wait();
+            productDataStore.CreateDocumentCollection(collectionName).Wait();
 
             var testDataItems = GeneratePdpItemTestData();
             foreach (PdpItem testDataItem in testDataItems)
             {
-                productDataStore.CreatePdpDocumentIfNotExists(testDataCollection, testDataItem).Wait();
+                productDataStore.CreatePdpDocumentIfNotExists(collectionName, testDataItem).Wait();
             }
         }
 
@@ -180,103 +178,103 @@
             List<PdpItem> pdpCollection = new List<PdpItem>();
 
             PdpItem testPdpItem1 = new PdpItem
-                                      {
-                                          ProductId = 1,
-                                          ProductName = "Warehouse Side Split Roll Neck Jumper",
-                                          SplashImgUrl = "./static/media/prod1-img1.jpg",
-                                          Price = 4600,
-                                          DiscountPrice = null,
-                                          Variants = new[] { new PdpItem.Variant { VariantId = 1 } },
-                                          ImageOptions =
-                                              new[]
-                                                  {
-                                                      new PdpItem.Image
-                                                          {
-                                                              Colour = "Olive marl",
-                                                              ImageList =
-                                                                  new[]
-                                                                      {
-                                                                          "./products/product1/prod1-img1.jpg",
-                                                                          "./products/product1/prod1-img2.jpg",
-                                                                          "./products/product1/prod1-img3.jpg",
-                                                                          "./products/product1/prod1-img4.jpg",
-                                                                      }
-                                                          }
-                                                  },
-                                          ProductDescription =
-                                              "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
-                                          ProductBrand = "Warehouse",
-                                          BrandDescription =
-                                              "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
-                                          Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
-                                          Gender = "Women",
-                                      };
+                                       {
+                                           ProductId = 1,
+                                           ProductName = "Warehouse Side Split Roll Neck Jumper",
+                                           SplashImgUrl = "./static/media/prod1-img1.jpg",
+                                           Price = 4600,
+                                           DiscountPrice = null,
+                                           Variants = new[] { new PdpItem.Variant { VariantId = 1 } },
+                                           ImageOptions =
+                                               new[]
+                                                   {
+                                                       new PdpItem.Image
+                                                           {
+                                                               Colour = "Olive marl",
+                                                               ImageList =
+                                                                   new[]
+                                                                       {
+                                                                           "./products/product1/prod1-img1.jpg",
+                                                                           "./products/product1/prod1-img2.jpg",
+                                                                           "./products/product1/prod1-img3.jpg",
+                                                                           "./products/product1/prod1-img4.jpg",
+                                                                       }
+                                                           }
+                                                   },
+                                           ProductDescription =
+                                               "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
+                                           ProductBrand = "Warehouse",
+                                           BrandDescription =
+                                               "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
+                                           Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
+                                           Gender = "Women",
+                                       };
 
             PdpItem testPdpItem2 = new PdpItem
-                                      {
-                                          ProductId = 2,
-                                          ProductName = "Warehouse Side Split Roll Neck Jumper",
-                                          SplashImgUrl = "./static/media/prod2-img1.jpg",
-                                          Price = 6000,
-                                          DiscountPrice = null,
-                                          Variants = new[] { new PdpItem.Variant { VariantId = 2 } },
-                                          ImageOptions =
-                                              new[]
-                                                  {
-                                                      new PdpItem.Image
-                                                          {
-                                                              Colour = "Olive marl",
-                                                              ImageList =
-                                                                  new[]
-                                                                      {
-                                                                          "./products/product2/prod1-img1.jpg",
-                                                                          "./products/product2/prod1-img2.jpg",
-                                                                          "./products/product2/prod1-img3.jpg",
-                                                                          "./products/product2/prod1-img4.jpg",
-                                                                      }
-                                                          }
-                                                  },
-                                          ProductDescription =
-                                              "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
-                                          ProductBrand = "Warehouse",
-                                          BrandDescription =
-                                              "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
-                                          Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
-                                          Gender = "Women",
-                                      };
+                                       {
+                                           ProductId = 2,
+                                           ProductName = "Warehouse Side Split Roll Neck Jumper",
+                                           SplashImgUrl = "./static/media/prod2-img1.jpg",
+                                           Price = 6000,
+                                           DiscountPrice = null,
+                                           Variants = new[] { new PdpItem.Variant { VariantId = 2 } },
+                                           ImageOptions =
+                                               new[]
+                                                   {
+                                                       new PdpItem.Image
+                                                           {
+                                                               Colour = "Olive marl",
+                                                               ImageList =
+                                                                   new[]
+                                                                       {
+                                                                           "./products/product2/prod1-img1.jpg",
+                                                                           "./products/product2/prod1-img2.jpg",
+                                                                           "./products/product2/prod1-img3.jpg",
+                                                                           "./products/product2/prod1-img4.jpg",
+                                                                       }
+                                                           }
+                                                   },
+                                           ProductDescription =
+                                               "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
+                                           ProductBrand = "Warehouse",
+                                           BrandDescription =
+                                               "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
+                                           Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
+                                           Gender = "Women",
+                                       };
 
             PdpItem testPdpItem3 = new PdpItem
-                                      {
-                                          ProductId = 3,
-                                          ProductName = "Adidas Originals Trefoil Hoodie In Grey",
-                                          SplashImgUrl = "./static/media/prod3-img1.jpg",
-                                          Price = 5000,
-                                          DiscountPrice = null,
-                                          Variants = new[] { new PdpItem.Variant { VariantId = 3 } },
-                                          ImageOptions =
-                                              new[]
-                                                  {
-                                                      new PdpItem.Image
-                                                          {
-                                                              Colour = "Olive marl",
-                                                              ImageList =
-                                                                  new[]
-                                                                      {
-                                                                          "./products/product3/prod1-img1.jpg",
-                                                                          "./products/product3/prod1-img2.jpg",
-                                                                          "./products/product3/prod1-img3.jpg",
-                                                                          "./products/product3/prod1-img4.jpg",
-                                                                      }
-                                                          }
-                                                  },
-                                          ProductDescription =
-                                              "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
-                                          ProductBrand = "Warehouse",
-                                          BrandDescription =
-                                              "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
-                                          Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
-                                          Gender = "Women",
-                                      };
+                                       {
+                                           ProductId = 3,
+                                           ProductName = "Adidas Originals Trefoil Hoodie In Grey",
+                                           SplashImgUrl = "./static/media/prod3-img1.jpg",
+                                           Price = 5000,
+                                           DiscountPrice = null,
+                                           Variants = new[] { new PdpItem.Variant { VariantId = 3 } },
+                                           ImageOptions =
+                                               new[]
+                                                   {
+                                                       new PdpItem.Image
+                                                           {
+                                                               Colour = "Olive marl",
+                                                               ImageList =
+                                                                   new[]
+                                                                       {
+                                                                           "./products/product3/prod1-img1.jpg",
+                                                                           "./products/product3/prod1-img2.jpg",
+                                                                           "./products/product3/prod1-img3.jpg",
+                                                                           "./products/product3/prod1-img4.jpg",
+                                                                       }
+                                                           }
+                                                   },
+                                           ProductDescription =
+                                               "Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size",
+                                           ProductBrand = "Warehouse",
+                                           BrandDescription =
+                                               "Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags.",
+                                           Materials = "55% Polyamide, 40% Acrylic, 5% Wool",
+                                           Gender = "Women",
+                                       };
 
             pdpCollection.Add(testPdpItem1);
             pdpCollection.Add(testPdpItem2);

@@ -12,6 +12,8 @@
     {
         public ProductDataStore _productDataStore;
 
+        private string _collectionName = "test_data_product";
+
         [SetUp]
         public void SetUp()
         {
@@ -20,15 +22,14 @@
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
 
-            TestData.TearDownDBTestData(this._productDataStore);
-            TestData.SetUpDBWithTestData(this._productDataStore);
+            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+            TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
 
         [Test]
         public void ReturnExactListOfItems()
         {
-            var testCollection = "test_data_product";
-            var itemsFromDataStore = _productDataStore.GetAllPlpItemsFromCollection(testCollection);
+            var itemsFromDataStore = _productDataStore.GetAllPlpItemsFromCollection(this._collectionName);
             var expectedData = TestData.GeneratePlpItemTestData();
 
             CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
