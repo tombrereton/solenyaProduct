@@ -34,6 +34,9 @@
             return this.Ok(items);
         }
 
+        [Route("/product={id}")]
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult GetItem(int id, string collectionName = "products")
         {
             var item = this._productDataStore.GetPdpItemFromCollection(collectionName, id) as PdpItem;
