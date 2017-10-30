@@ -34,5 +34,10 @@
 
             CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
         }
+
+        [Test]
+        public void PopulateDatabase()
+        {
+        }
     }
 }

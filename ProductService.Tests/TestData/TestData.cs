@@ -1,8 +1,6 @@
 ﻿namespace ProductService.Tests.TestData
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
-    using System.Threading.Tasks;
 
     using Newtonsoft.Json;
 
