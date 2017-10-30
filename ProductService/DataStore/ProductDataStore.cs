@@ -48,7 +48,6 @@ namespace ProductService.DataStore
         /// </returns>
         public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
-            var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
                 UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
@@ -60,7 +59,6 @@ namespace ProductService.DataStore
 
         public PdpItem GetPdpItemFromCollection(string collectionName, int id)
         {
-            var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PdpItem> productQueryInSql = this._client.CreateDocumentQuery<PdpItem>(
                 UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
