@@ -11,21 +11,19 @@
 
     public class TestData
     {
-        public static void TearDownDBTestData(IProductsDataStore productDataStore)
+        public static void TearDownDBTestData(IProductsDataStore productDataStore, string collectionName)
         {
-            string testDataCollection = "test_data_product";
-            productDataStore.RemoveDocumentCollection(testDataCollection).Wait();
+            productDataStore.RemoveDocumentCollection(collectionName).Wait();
         }
 
-        public static void SetUpDBWithTestData(IProductsDataStore productDataStore)
+        public static void SetUpDBWithTestData(IProductsDataStore productDataStore, string collectionName)
         {
-            string testDataCollection = "test_data_product";
-            productDataStore.CreateDocumentCollection(testDataCollection).Wait();
+            productDataStore.CreateDocumentCollection(collectionName).Wait();
 
             var testDataItems = GeneratePdpItemTestData();
             foreach (PdpItem testDataItem in testDataItems)
             {
-                productDataStore.CreatePdpDocumentIfNotExists(testDataCollection, testDataItem).Wait();
+                productDataStore.CreatePdpDocumentIfNotExists(collectionName, testDataItem).Wait();
             }
         }
 

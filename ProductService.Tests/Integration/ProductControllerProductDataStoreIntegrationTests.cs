@@ -37,8 +37,8 @@
             this._productDataStore = new ProductDataStore(endpointUrl, primaryKey);
             this._controller = new ProductController(this._productDataStore);
 
-            TestData.TearDownDBTestData(this._productDataStore);
-            TestData.SetUpDBWithTestData(this._productDataStore);
+            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+            TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
 
         [Test]
