@@ -113,11 +113,10 @@
     <Compile Include="DataStore\ProductDataStoreTests.cs" />
     <Compile Include="DataStore\LocalProductDataStoreTests.cs" />
     <Compile Include="Controllers\ProductControllerTests.cs" />
-    <Compile Include="DataStore\TestData.cs" />
+    <Compile Include="TestData\TestData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Integration\ProductControllerLocalProductDataStoreIntegrationTests.cs" />
     <Compile Include="Integration\ProductControllerProductDataStoreIntegrationTests.cs" />
-    <Compile Include="Integration\ResourceSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

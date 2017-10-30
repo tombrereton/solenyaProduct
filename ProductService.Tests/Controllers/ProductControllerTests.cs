@@ -11,6 +11,7 @@
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
+    using ProductService.Tests.TestData;
 
     using Assert = NUnit.Framework.Assert;
 
@@ -34,8 +35,8 @@
         [Test]
         public void ReturnOkResponseForGetRequest()
         {
-            var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -45,9 +46,9 @@
         [Test]
         public void ReturnNonEmptyListOfProducts()
         {
-            var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
+            var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -59,9 +60,9 @@
         [Test]
         public void ReturnListOfItems()
         {
-            var plpItems = new List<PlpItem> { CreateTestPlpItem(123), CreateTestPlpItem(345) };
+            var plpItems = new List<PlpItem> { TestData.CreateTestPlpItem(123), TestData.CreateTestPlpItem(345) };
 
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(plpItems);
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("products")).Returns(plpItems);
 
             var result = this._productController.GetItems();
 
@@ -73,7 +74,8 @@
         [Test]
         public async Task ReturnNotFoundResultWhenDatastoreReturnsNoProducts()
         {
-            this._productAdapter.Setup(x => x.GetAllPlpItems()).Returns(new List<PlpItem>());
+            this._productAdapter.Setup(x => x.GetAllPlpItemsFromCollection("test_data_product"))
+                .Returns(new List<PlpItem>());
 
             var result = this._productController.GetItems();
 
@@ -81,30 +83,5 @@
         }
 
         // Add test to check if data has been hard coded
-        private static PlpItem CreateTestPlpItem(int id)
-        {
-            string productName = "Test Product";
-            string imageUrl = "Test URL";
-            int price = 2000;
-            int discountPrice = 1500;
-            return new PlpItem(id, productName, imageUrl, price, discountPrice);
-        }
-
-        private static PdpItem CreateTestPdpItem(int id)
-        {
-            string productName = "Test Product";
-            string imageUrl = "Test URL";
-            int price = 2000;
-            int discountPrice = 1500;
-            PdpItem.Variant[] variants = new PdpItem.Variant[] {new PdpItem.Variant(1)};
-            PdpItem.Image[] imageOptions = new PdpItem.Image[]{new PdpItem.Image("red", new string[] { "a", "b", "c" })};
-            string productDescription = "Test Description";
-            string productBrand = "Test Brand Name";
-            string brandDescription = "Test Brand Description";
-            string materials = "Test Materials";
-            string gender = "Test Gender";
-
-            return new PdpItem(id, productName, imageUrl, price, discountPrice, variants, imageOptions, productDescription, productBrand, brandDescription, materials, gender);
-        }
     }
 }

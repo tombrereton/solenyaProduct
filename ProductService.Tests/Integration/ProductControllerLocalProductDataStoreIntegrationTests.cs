@@ -9,6 +9,7 @@
     using ProductService.DataStore;
     using ProductService.Models;
     using ProductService.Tests.DataStore;
+    using ProductService.Tests.TestData;
 
     [TestFixture]
     public class ProductControllerLocalProductDataStoreIntegrationTests
