@@ -116,12 +116,12 @@
     <Compile Include="DataStore\ProductDataStoreTests.cs" />
     <Compile Include="DataStore\LocalProductDataStoreTests.cs" />
     <Compile Include="Controllers\ProductControllerTests.cs" />
-    <Compile Include="Features\ProductAPIFeatures.feature.cs">
+    <Compile Include="Features\ProductAPIFeature.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProductAPIFeatures.feature</DependentUpon>
+      <DependentUpon>ProductAPIFeature.feature</DependentUpon>
     </Compile>
-    <Compile Include="Acceptance\ProductAPIFeaturesSteps.cs" />
+    <Compile Include="Acceptance\ProductAPIFeatureSteps.cs" />
     <Compile Include="TestData\TestData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Integration\ProductControllerLocalProductDataStoreIntegrationTests.cs" />
@@ -132,9 +132,9 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Features\ProductAPIFeatures.feature">
+    <None Include="Features\ProductAPIFeature.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ProductAPIFeatures.feature.cs</LastGenOutput>
+      <LastGenOutput>ProductAPIFeature.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -148,6 +148,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
