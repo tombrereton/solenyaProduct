@@ -34,7 +34,7 @@
             return this.Ok(items);
         }
 
-        [Route("/product={id}")]
+        [Route("product={id}")]
         [HttpGet]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult GetItem(int id, string collectionName = "products")

@@ -62,7 +62,7 @@ namespace ProductService.DataStore
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PdpItem> productQueryInSql = this._client.CreateDocumentQuery<PdpItem>(
                 UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
-                "SELECT * FROM products p WHERE p.id =" + id, queryOptions);
+                "SELECT * FROM products p WHERE p.ProductId =" + id.ToString(), queryOptions);
 
             return productQueryInSql.ToList<PdpItem>().ElementAt(0);
         }
