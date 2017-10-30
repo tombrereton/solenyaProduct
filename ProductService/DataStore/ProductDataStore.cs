@@ -58,7 +58,7 @@ namespace ProductService.DataStore
             return productsQueryInSql.ToList<PlpItem>();
         }
 
-        public IEnumerable<PdpItem> GetPdpItemFromCollection(string collectionName, int id)
+        public PdpItem GetPdpItemFromCollection(string collectionName, int id)
         {
             var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
@@ -66,7 +66,7 @@ namespace ProductService.DataStore
                 UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
                 "SELECT * FROM products p WHERE p.id =" + id, queryOptions);
 
-            return productQueryInSql.ToList<PdpItem>();
+            return productQueryInSql.ToList<PdpItem>().ElementAt(0);
         }
 
         public async Task RemoveDocumentCollection(string collectionName)

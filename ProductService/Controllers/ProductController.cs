@@ -6,6 +6,8 @@
 
     using Castle.Core.Internal;
 
+    using Microsoft.Azure.Documents.SystemFunctions;
+
     using ProductService.DataStore;
     using ProductService.Models;
 
@@ -34,8 +36,9 @@
 
         public IHttpActionResult GetItem(int id, string collectionName = "products")
         {
-            var item = this._productDataStore.GetPdpItemFromCollection(collectionName, id) as List<PdpItem>;
-            if (item.IsNullOrEmpty())
+            var item = this._productDataStore.GetPdpItemFromCollection(collectionName, id) as PdpItem;
+
+            if (item == null)
             {
                 return this.NotFound();
             }

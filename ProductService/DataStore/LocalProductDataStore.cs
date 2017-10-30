@@ -2,6 +2,7 @@ namespace ProductService.DataStore
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.Azure.Documents.SystemFunctions;
@@ -26,7 +27,7 @@ namespace ProductService.DataStore
             return GetItems();
         }
 
-        public IEnumerable<PdpItem> GetPdpItemFromCollection(string collectionName, int id)
+        public PdpItem GetPdpItemFromCollection(string collectionName, int id)
         {
             return GetItem(id);
         }
@@ -89,7 +90,7 @@ namespace ProductService.DataStore
             return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
         }
 
-        private IEnumerable<PdpItem> GetItem(int id)
+        private PdpItem GetItem(int id)
         {
             const string ProductString = @"[
                             {   
@@ -138,7 +139,7 @@ namespace ProductService.DataStore
                             }
                         ]";
 
-            return JsonConvert.DeserializeObject<List<PdpItem>>(ProductString);
+            return JsonConvert.DeserializeObject<PdpItem>(ProductString);
         }
 
     }

@@ -9,7 +9,7 @@ namespace ProductService.DataStore
     {
         IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName);
 
-        IEnumerable<PdpItem> GetPdpItemFromCollection(string collectionName, int id);
+        PdpItem GetPdpItemFromCollection(string collectionName, int id);
 
         Task RemoveDocumentCollection(string collectionName);
 
