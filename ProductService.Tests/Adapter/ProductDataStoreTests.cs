@@ -23,8 +23,13 @@
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
 
-            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
+        }
+
+        [OneTimeTearDown]
+        public void GlobalTearDown()
+        {
+            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
         }
 
         [Test]

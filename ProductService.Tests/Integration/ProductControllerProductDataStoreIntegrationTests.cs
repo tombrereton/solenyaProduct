@@ -30,10 +30,14 @@
             string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
-            this._controller = new ProductController(this._productDataStore);
 
-            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
+        }
+
+        [OneTimeTearDown]
+        public void GlobalTearDown()
+        {
+            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
         }
 
         [Test]
@@ -98,7 +102,7 @@
         [Test]
         public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
         {
-            var actualItemFromController = this._controller.GetItem(123, "");
+            var actualItemFromController = this._controller.GetItem(123, string.Empty);
 
             Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
         }
