@@ -47,6 +47,11 @@
             return plpItems;
         }
 
+        public static PdpItem GenerateSinglePdpItemTestData()
+        {
+            return CreateTestPdpItem(123);
+        }
+
         public static IEnumerable<PlpItem> GetDBItems()
         {
             const string ProductString = @"[

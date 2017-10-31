@@ -7,6 +7,8 @@ namespace ProductService.Models
     using System;
     using System.Collections.Generic;
 
+    using Microsoft.Ajax.Utilities;
+
     public class PdpItem
     {
         public PdpItem()

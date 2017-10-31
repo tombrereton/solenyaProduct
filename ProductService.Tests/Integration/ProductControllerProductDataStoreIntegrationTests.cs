@@ -54,6 +54,18 @@
         }
 
         [Test]
+        public void ShouldReturnContentMatchingItemFromJsonWithControllerAndDatastore()
+        {
+            var response = this._controller.GetItem(123, this._collectionName);
+            var responseContents = ((OkNegotiatedContentResult<PdpItem>)response).Content;
+
+           var result = TestData.GenerateSinglePdpItemTestData();
+
+
+            Assert.AreEqual(result.ToString(), responseContents.ToString());
+        }
+
+        [Test]
         public void ShouldReturnAllItemsWithControllerAndDatastore()
         {
             var response = this._controller.GetItems(this._collectionName);
