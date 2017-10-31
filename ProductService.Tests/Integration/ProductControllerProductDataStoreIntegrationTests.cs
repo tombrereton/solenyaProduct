@@ -23,13 +23,13 @@
 
         private readonly string _collectionName = "test_data_product";
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void GlobalSetup()
         {
-            string endpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
-            string primaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
+            string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
+            string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
-            this._productDataStore = new ProductDataStore(endpointUrl, primaryKey);
+            this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
             this._controller = new ProductController(this._productDataStore);
 
             TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
@@ -98,7 +98,7 @@
         [Test]
         public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
         {
-            var actualItemFromController = this._controller.GetItem(123, "wrongCollectionName");
+            var actualItemFromController = this._controller.GetItem(123, "");
 
             Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
         }
