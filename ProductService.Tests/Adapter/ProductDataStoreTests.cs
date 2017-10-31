@@ -15,8 +15,8 @@
 
         private string _collectionName = "test_data_product";
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void GlobalSetup()
         {
             string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
             string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
