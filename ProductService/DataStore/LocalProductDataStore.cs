@@ -27,7 +27,7 @@ namespace ProductService.DataStore
             return GetItems();
         }
 
-        public PdpItem GetPdpItemFromCollection(string collectionName, int id)
+        public PdpItem GetPdpItemFromCollection(int id, string collectionName)
         {
             return GetItem(id);
         }
@@ -141,6 +141,5 @@ namespace ProductService.DataStore
 
             return JsonConvert.DeserializeObject<PdpItem>(ProductString);
         }
-
     }
 }

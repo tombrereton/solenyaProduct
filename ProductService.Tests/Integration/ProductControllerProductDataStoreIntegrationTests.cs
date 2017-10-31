@@ -2,19 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Threading.Tasks;
+    using System.Web.Http;
     using System.Web.Http.Results;
-
-    using Microsoft.Azure.Documents;
-    using Microsoft.Azure.Documents.Client;
 
     using NUnit.Framework;
 
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
-    using ProductService.Tests.DataStore;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -42,7 +37,7 @@
         }
 
         [Test]
-        public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
+        public void ShouldReturnPlpContentsMatchingListFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItems(this._collectionName);
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
@@ -54,15 +49,14 @@
         }
 
         [Test]
-        public void ShouldReturnContentMatchingItemFromJsonWithControllerAndDatastore()
+        public void ShouldReturnPdpContentMatchingItemFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItem(123, this._collectionName);
             var responseContents = ((OkNegotiatedContentResult<PdpItem>)response).Content;
 
-           var result = TestData.GenerateSinglePdpItemTestData();
+            var result = TestData.GenerateSinglePdpItemTestData();
 
-
-            Assert.AreEqual(result.ToString(), responseContents.ToString());
+            Assert.AreEqual(result, responseContents);
         }
 
         [Test]
@@ -73,9 +67,40 @@
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
 
-        // [Test]
-        // public void ShouldReturnDataMatchingDataFromTestData()
-        // {
-        // }
+        [Test]
+        public void ShouldReturnPdpItemFromControllerAndDatastore()
+        {
+            var actualResponse = this._controller.GetItem(123, this._collectionName);
+            var actualOkNegotiatedContent = actualResponse as OkNegotiatedContentResult<PdpItem>;
+            var actualContent = actualOkNegotiatedContent.Content;
+
+            var expectedPdpItem = TestData.GeneratePdpItemTestData()[2];
+
+            Assert.AreEqual(expectedPdpItem, actualContent);
+        }
+
+        [Test]
+        public void ShouldReturnOkResponseForPdpItemWithControllerAndDataStore()
+        {
+            var response = this._controller.GetItem(123, this._collectionName);
+
+            Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<PdpItem>>());
+        }
+
+        [Test]
+        public void ShouldReturnNotFoundResponseForIncorrectProductId()
+        {
+            var actualItemFromController = this._controller.GetItem(999, this._collectionName);
+
+            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+        }
+
+        [Test]
+        public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
+        {
+            var actualItemFromController = this._controller.GetItem(123, "wrongCollectionName");
+
+            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+        }
     }
 }
