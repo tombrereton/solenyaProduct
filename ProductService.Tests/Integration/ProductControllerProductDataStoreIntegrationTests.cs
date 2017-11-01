@@ -4,6 +4,7 @@
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Http.Results;
+    using System.Xml.Serialization;
 
     using NUnit.Framework;
 
@@ -30,6 +31,7 @@
             string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
+            this._controller = new ProductController(this._productDataStore);
 
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
