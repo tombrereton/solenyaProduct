@@ -4,9 +4,6 @@
 
 namespace ProductService.Models
 {
-    using System;
-    using System.Collections.Generic;
-
     public class PdpItem
     {
         public PdpItem()
@@ -94,6 +91,21 @@ namespace ProductService.Models
             public string Colour { get; set; }
 
             public string[] ImageList { get; set; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(PdpItem))
+            {
+                return false;
+            }
+
+            return this.ToString().Equals(obj.ToString());
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

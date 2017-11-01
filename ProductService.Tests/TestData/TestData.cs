@@ -47,6 +47,11 @@
             return plpItems;
         }
 
+        public static PdpItem GenerateSinglePdpItemTestData()
+        {
+            return CreateTestPdpItem(123);
+        }
+
         public static IEnumerable<PlpItem> GetDBItems()
         {
             const string ProductString = @"[
@@ -142,7 +147,7 @@
             return new PlpItem(id, productName, imageUrl, price, discountPrice);
         }
 
-        private static PdpItem CreateTestPdpItem(int id)
+        public static PdpItem CreateTestPdpItem(int id)
         {
             string productName = "Test Product";
             string imageUrl = "Test URL";

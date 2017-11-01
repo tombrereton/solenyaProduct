@@ -2,7 +2,10 @@ namespace ProductService.DataStore
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.Azure.Documents.SystemFunctions;
 
     using Newtonsoft.Json;
 
@@ -22,6 +25,11 @@ namespace ProductService.DataStore
         public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
             return GetItems();
+        }
+
+        public PdpItem GetPdpItemFromCollection(int id, string collectionName)
+        {
+            return GetItem(id);
         }
 
         public Task RemoveDocumentCollection(string collectionName)
@@ -80,6 +88,58 @@ namespace ProductService.DataStore
                             ]";
 
             return JsonConvert.DeserializeObject<List<PlpItem>>(ProductString);
+        }
+
+        private PdpItem GetItem(int id)
+        {
+            const string ProductString = @"[
+                            {   
+                                ""productID"": 123,
+                                ""productName"": ""Warehouse Side Split Roll Neck Jumper"",
+                                ""splashImgUrl"": ""./static/media/prod1-img1.jpg"",
+                                ""price"": 4600,
+                                ""discountPrice"": """",
+                                ""variants"": [
+                                            {
+                                                ""variantId"": 1
+                                            },
+                                            {
+                                                ""variantId"": 2
+                                            },
+                                            {
+                                                ""variantId"": 3
+                                            },
+                                            {
+                                                ""variantId"": 4
+                                            },
+                                            {
+                                                ""variantId"": 5
+                                            },
+                                            {
+                                                ""variantId"": 6
+                                            }
+                                            ],
+                                            ""imageOptions"": [
+                                            {
+                                                ""colour"": ""Olive marl"",
+                                                ""imageList"": [
+                                                ""./static/media/prod1-img1.jpg"",
+                                                ""./static/media/prod1-img2.jpg"",
+                                                ""./static/media/prod1-img3.jpg"",
+                                                ""./static/media/prod1-img4.jpg""
+                                                    ]
+                                            }
+                                            ],
+                                            ""productDescription"": ""Jumper by Warehouse, Textured knit, Cowl neck, Raglan sleeves, Ribbed trims, Split hem, Regular fit - true to size"",
+                                            ""productBrand"": ""Warehouse"",
+                                            ""brandDescription"": ""Delivering seasonal trends for the high street, Warehouse offer a collection of directional pieces, with vibrant prints and clean cut tailoring channelling the brand's signature style. Statement party dresses sit alongside classic wardrobe staples, all complemented by a key range of jewellery and accessories, including an exclusive edit of three satchel bags."",
+                                            ""materials"": ""55% Polyamide, 40% Acrylic, 5% Wool"",
+                                            ""gender"": ""Women"",
+                                
+                            }
+                        ]";
+
+            return JsonConvert.DeserializeObject<PdpItem>(ProductString);
         }
     }
 }

@@ -2,19 +2,15 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Threading.Tasks;
+    using System.Web.Http;
     using System.Web.Http.Results;
-
-    using Microsoft.Azure.Documents;
-    using Microsoft.Azure.Documents.Client;
+    using System.Xml.Serialization;
 
     using NUnit.Framework;
 
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
-    using ProductService.Tests.DataStore;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -28,21 +24,26 @@
 
         private readonly string _collectionName = "test_data_product";
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void GlobalSetup()
         {
-            string endpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
-            string primaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
+            string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
+            string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
-            this._productDataStore = new ProductDataStore(endpointUrl, primaryKey);
+            this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
             this._controller = new ProductController(this._productDataStore);
 
-            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
 
+        [OneTimeTearDown]
+        public void GlobalTearDown()
+        {
+            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+        }
+
         [Test]
-        public void ShouldReturnContentsMatchingListFromJsonWithControllerAndDatastore()
+        public void ShouldReturnPlpContentsMatchingListFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItems(this._collectionName);
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
@@ -54,6 +55,17 @@
         }
 
         [Test]
+        public void ShouldReturnPdpContentMatchingItemFromJsonWithControllerAndDatastore()
+        {
+            var response = this._controller.GetItem(123, this._collectionName);
+            var responseContents = ((OkNegotiatedContentResult<PdpItem>)response).Content;
+
+            var result = TestData.GenerateSinglePdpItemTestData();
+
+            Assert.AreEqual(result, responseContents);
+        }
+
+        [Test]
         public void ShouldReturnAllItemsWithControllerAndDatastore()
         {
             var response = this._controller.GetItems(this._collectionName);
@@ -61,9 +73,40 @@
             Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<List<PlpItem>>>());
         }
 
-        // [Test]
-        // public void ShouldReturnDataMatchingDataFromTestData()
-        // {
-        // }
+        [Test]
+        public void ShouldReturnPdpItemFromControllerAndDatastore()
+        {
+            var actualResponse = this._controller.GetItem(123, this._collectionName);
+            var actualOkNegotiatedContent = actualResponse as OkNegotiatedContentResult<PdpItem>;
+            var actualContent = actualOkNegotiatedContent.Content;
+
+            var expectedPdpItem = TestData.GeneratePdpItemTestData()[2];
+
+            Assert.AreEqual(expectedPdpItem, actualContent);
+        }
+
+        [Test]
+        public void ShouldReturnOkResponseForPdpItemWithControllerAndDataStore()
+        {
+            var response = this._controller.GetItem(123, this._collectionName);
+
+            Assert.That(response, Is.InstanceOf<OkNegotiatedContentResult<PdpItem>>());
+        }
+
+        [Test]
+        public void ShouldReturnNotFoundResponseForIncorrectProductId()
+        {
+            var actualItemFromController = this._controller.GetItem(999, this._collectionName);
+
+            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+        }
+
+        [Test]
+        public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
+        {
+            var actualItemFromController = this._controller.GetItem(123, string.Empty);
+
+            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+        }
     }
 }

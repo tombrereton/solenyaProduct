@@ -8,7 +8,7 @@
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
-    using ProductService.Tests.DataStore;
+    using ProductService.Tests.Adapter;
     using ProductService.Tests.TestData;
 
     [TestFixture]

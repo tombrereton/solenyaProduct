@@ -48,7 +48,6 @@ namespace ProductService.DataStore
         /// </returns>
         public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
-            var documentDBCollection = "products";
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
                 UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
@@ -56,6 +55,30 @@ namespace ProductService.DataStore
                 queryOptions);
 
             return productsQueryInSql.ToList<PlpItem>();
+        }
+
+        public PdpItem GetPdpItemFromCollection(int id, string collectionName)
+        {
+            try
+            {
+                FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+                IQueryable<PdpItem> productQueryInSql = this._client.CreateDocumentQuery<PdpItem>(
+                    UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
+                    "SELECT * FROM products p WHERE p.ProductId =" + id.ToString(),
+                    queryOptions);
+                return productQueryInSql.ToList<PdpItem>().ElementAt(0);
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                // When productId does not exist
+                return null;
+            }
+            catch (AggregateException exception)
+            {
+                // When productId does not exist
+                // When collection name does not exist
+                return null;
+            }
         }
 
         public async Task RemoveDocumentCollection(string collectionName)

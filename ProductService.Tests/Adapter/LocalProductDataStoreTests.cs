@@ -1,4 +1,4 @@
-﻿namespace ProductService.Tests.DataStore
+﻿namespace ProductService.Tests.Adapter
 {
     using System.Linq;
 

@@ -6,6 +6,8 @@
 
     using Castle.Core.Internal;
 
+    using Microsoft.Azure.Documents.SystemFunctions;
+
     using ProductService.DataStore;
     using ProductService.Models;
 
@@ -30,6 +32,21 @@
             }
 
             return this.Ok(items);
+        }
+
+        [Route("products/{id}")]
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult GetItem([FromUri] int id, string collectionName = "products")
+        {
+            var item = this._productDataStore.GetPdpItemFromCollection(id, collectionName);
+
+            if (item == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(item);
         }
     }
 }
