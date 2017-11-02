@@ -67,5 +67,16 @@
 
             Assert.AreEqual(expected, actualItemfromDataStore);
         }
+
+        [Test]
+        public void PopulateDB()
+        {
+            var itemsFromTestDb = TestData.GeneratePdpDbData();
+
+            foreach (PdpItem pdpItem in itemsFromTestDb)
+            {
+                this._productDataStore.CreatePdpDocumentIfNotExists("products", pdpItem).Wait();
+            }
+        }
     }
 }

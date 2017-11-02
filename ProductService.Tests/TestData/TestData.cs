@@ -222,10 +222,10 @@
                                                                     Colour = "Olive marl",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod1-img1.jpg",
-                                                                                        "./static/media/prod1-img2.jpg",
-                                                                                        "./static/media/prod1-img3.jpg",
-                                                                                        "./static/media/prod1-img4.jpg",
+                                                                                        "../static/media/prod1-img1.jpg",
+                                                                                        "../static/media/prod1-img2.jpg",
+                                                                                        "../static/media/prod1-img3.jpg",
+                                                                                        "../static/media/prod1-img4.jpg",
                                                                                     }
                                                                 }
                                                         },
@@ -278,10 +278,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod2-img1.jpg",
-                                                                                        "./static/media/prod2-img2.jpg",
-                                                                                        "./static/media/prod2-img3.jpg",
-                                                                                        "./static/media/prod1-img4.jpg",
+                                                                                        "../static/media/prod2-img1.jpg",
+                                                                                        "../static/media/prod2-img2.jpg",
+                                                                                        "../static/media/prod2-img3.jpg",
+                                                                                        "../static/media/prod2-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
@@ -356,10 +356,10 @@
                                                                     Colour = "Grey",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod3-img1.jpg",
-                                                                                        "./static/media/prod3-img2.jpg",
-                                                                                        "./static/media/prod3-img3.jpg",
-                                                                                        "./static/media/prod3-img4.jpg",
+                                                                                        "../static/media/prod3-img1.jpg",
+                                                                                        "../static/media/prod3-img2.jpg",
+                                                                                        "../static/media/prod3-img3.jpg",
+                                                                                        "../static/media/prod3-img4.jpg",
                                                                                     }
                                                                 },
                                                              new PdpItem.Image
@@ -367,10 +367,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod3-img5.jpg",
-                                                                                        "./static/media/prod3-img6.jpg",
-                                                                                        "./static/media/prod3-img7.jpg",
-                                                                                        "./static/media/prod3-img8.jpg",
+                                                                                        "../static/media/prod3-img5.jpg",
+                                                                                        "../static/media/prod3-img6.jpg",
+                                                                                        "../static/media/prod3-img7.jpg",
+                                                                                        "../static/media/prod3-img8.jpg",
                                                                                     }
                                                                 }
 
@@ -423,10 +423,10 @@
                                                                     Colour = "Black",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod4-img1.jpg",
-                                                                                        "./static/media/prod4-img2.jpg",
-                                                                                        "./static/media/prod4-img3.jpg",
-                                                                                        "./static/media/prod4-img4.jpg",
+                                                                                        "../static/media/prod4-img1.jpg",
+                                                                                        "../static/media/prod4-img2.jpg",
+                                                                                        "../static/media/prod4-img3.jpg",
+                                                                                        "../static/media/prod4-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
@@ -470,10 +470,10 @@
                                                                     Colour = "Aries white",
                                                                     ImageList = new string[]
                                                                                     {
-                                                                                        "./static/media/prod5-img1.jpg",
-                                                                                        "./static/media/prod5-img2.jpg",
-                                                                                        "./static/media/prod5-img3.jpg",
-                                                                                        "./static/media/prod5-img4.jpg",
+                                                                                        "../static/media/prod5-img1.jpg",
+                                                                                        "../static/media/prod5-img2.jpg",
+                                                                                        "../static/media/prod5-img3.jpg",
+                                                                                        "../static/media/prod5-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
