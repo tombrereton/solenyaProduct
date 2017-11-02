@@ -281,7 +281,7 @@
                                                                                         "../static/media/prod2-img1.jpg",
                                                                                         "../static/media/prod2-img2.jpg",
                                                                                         "../static/media/prod2-img3.jpg",
-                                                                                        "../static/media/prod1-img4.jpg",
+                                                                                        "../static/media/prod2-img4.jpg",
                                                                                     }
                                                                 }
                                                                     },
