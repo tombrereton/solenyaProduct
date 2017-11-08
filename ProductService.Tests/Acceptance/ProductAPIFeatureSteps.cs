@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Configuration;
     using System.IO;
     using System.Net;
     using System.Text.RegularExpressions;
@@ -26,7 +27,7 @@
         [When(@"I enter the homepage url")]
         public void WhenIEnterTheHomepageUrl()
         {
-            string url = "http://team-solenya-dev-client.azurewebsites.net";
+            string url = ConfigurationManager.AppSettings["ClientServerEndpoint"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             ScenarioContext.Current.Add("request", request);
@@ -43,7 +44,7 @@
         [When(@"I hit the productAPI endpoint")]
         public void WhenIHitTheProductAPIEndpoint()
         {
-            string url = "http://team-solenya-product-dev.azurewebsites.net";
+            string url = ConfigurationManager.AppSettings["ProductServiceEndpoint"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             ScenarioContext.Current.Add("request", request);
