@@ -48,5 +48,14 @@
 
             return this.Ok(item);
         }
+
+        [Route("test")]
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult Test()
+        {
+            var testString = "Hello, this is a test";
+            return this.Ok(testString);
+        }
     }
 }
