@@ -148,34 +148,5 @@
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<PdpItem>>());
         }
 
-        [Test]
-        public void LogNotFoundErrorWhenNoPdpItemFound()
-        {
-            var pdpItem = TestData.CreateTestPdpItem(123);
-
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "products")).Returns(pdpItem);
-
-            var result = this._productController.GetItem(999);
-
-            this._telemetryLogger.Verify(
-                x => x.LogApiErrors(
-                    It.Is<List<ProductApiError>>(
-                        errors => AssertProductApiError(
-                            errors,
-                            "PdpItemDoesNotExist",
-                            "Pdp item was not found in the database."))),
-                Times.Once);
-        }
-
-        private static bool AssertProductApiError(
-            List<ProductApiError> validationError,
-            string expectedErrorCode,
-            string expectedErrorMessage)
-        {
-            Assert.That(validationError[0].ErrorCode, Is.EqualTo(expectedErrorCode));
-            Assert.That(validationError[0].ErrorMessage, Is.EqualTo(expectedErrorMessage));
-
-            return true;
-        }
     }
 }

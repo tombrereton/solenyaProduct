@@ -6,7 +6,7 @@ namespace ProductService.Tests.Controllers
 {
     public interface ITelemetryLogger
     {
-        void LogApiErrors(IList<ProductApiError> validationErrors);
+        void LogValidationErrors(IList<ValidationError> validationErrors);
 
         void LogException(Exception exception);
     }
