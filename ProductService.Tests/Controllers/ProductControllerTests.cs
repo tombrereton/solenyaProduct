@@ -108,15 +108,18 @@
         }
 
         [Test]
-        public void ReturnNotFoundIfProductIdIsInvalid()
+        public void ReturnErrorIfProductIdIsInvalid()
         {
             var pdpItem = TestData.CreateTestPdpItem(123);
 
             this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "products")).Returns(pdpItem);
 
             var result = this._productController.GetItem(999);
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)result;
 
-            Assert.IsAssignableFrom<NotFoundResult>(result);
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("PdpItemDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Pdp item was not found in the database."));
         }
 
         [Test]
@@ -144,5 +147,6 @@
 
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<PdpItem>>());
         }
+
     }
 }

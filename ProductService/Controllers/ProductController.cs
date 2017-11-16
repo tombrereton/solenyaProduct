@@ -1,6 +1,8 @@
 ﻿namespace ProductService.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Http;
     using System.Web.Http.Cors;
 
@@ -9,12 +11,14 @@
     using Microsoft.Azure.Documents.SystemFunctions;
 
     using ProductService.DataStore;
+    using ProductService.ErrorHandler;
     using ProductService.Models;
 
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
 
+        // private readonly ItemValidator _validator = new ItemValidator();
         public ProductController(IProductsDataStore productDataStore)
         {
             this._productDataStore = productDataStore;
@@ -41,9 +45,13 @@
         {
             var item = this._productDataStore.GetPdpItemFromCollection(id, collectionName);
 
-            if (item == null)
+
+            var errors = ProductApiErrorHandler.Execute(item);
+
+            if (errors.Any())
             {
-                return this.NotFound();
+            
+                return this.Ok(errors);
             }
 
             return this.Ok(item);
