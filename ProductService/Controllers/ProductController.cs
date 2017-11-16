@@ -11,14 +11,14 @@
     using Microsoft.Azure.Documents.SystemFunctions;
 
     using ProductService.DataStore;
+    using ProductService.ErrorHandler;
     using ProductService.Models;
 
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
 
-        //private readonly ItemValidator _validator = new ItemValidator();
-
+        // private readonly ItemValidator _validator = new ItemValidator();
         public ProductController(IProductsDataStore productDataStore)
         {
             this._productDataStore = productDataStore;
@@ -45,11 +45,13 @@
         {
             var item = this._productDataStore.GetPdpItemFromCollection(id, collectionName);
 
-            var errors = ItemValidator.Execute(item);
+
+            var errors = ProductApiErrorHandler.Execute(item);
 
             if (errors.Any())
             {
-                return this.Ok();
+            
+                return this.Ok(errors);
             }
 
             return this.Ok(item);
@@ -62,15 +64,6 @@
         {
             var testString = "Hello, this is a test";
             return this.Ok(testString);
-        }
-    }
-
-    internal static class ItemValidator
-    {
-        public static List<string> Execute(PdpItem pdpItem)
-        {
-            var errors = new List<string>();
-            return errors;
         }
     }
 }
