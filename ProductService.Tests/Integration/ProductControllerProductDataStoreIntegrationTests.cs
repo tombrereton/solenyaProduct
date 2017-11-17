@@ -6,11 +6,14 @@
     using System.Web.Http.Results;
     using System.Xml.Serialization;
 
+    using Moq;
+
     using NUnit.Framework;
 
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
+    using ProductService.Tests.Controllers;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -22,6 +25,8 @@
 
         private IEnumerable<PlpItem> _testItem;
 
+        private Mock<ITelemetryLogger> _telemetryLogger;
+
         private readonly string _collectionName = "test_data_product";
 
         [OneTimeSetUp]
@@ -31,7 +36,8 @@
             string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
-            this._controller = new ProductController(this._productDataStore);
+            this._telemetryLogger = new Mock<ITelemetryLogger>();
+            this._controller = new ProductController(this._productDataStore, this._telemetryLogger.Object);
 
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }

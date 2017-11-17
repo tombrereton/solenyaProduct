@@ -13,16 +13,20 @@
     using ProductService.DataStore;
     using ProductService.ErrorHandler;
     using ProductService.Models;
+    using ProductService.Tests.Controllers;
 
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
+        private readonly ProductApiErrorHandler _errorHandler;
 
         // private readonly ItemValidator _validator = new ItemValidator();
-        public ProductController(IProductsDataStore productDataStore)
+        public ProductController(IProductsDataStore productDataStore, ITelemetryLogger telemetryLogger)
         {
             this._productDataStore = productDataStore;
+            this._errorHandler = new ProductApiErrorHandler(this, telemetryLogger);
         }
+
 
         [Route("")]
         [HttpGet]
@@ -50,7 +54,8 @@
 
             if (errors.Any())
             {
-            
+
+                this._errorHandler.HandleFailedProductApiResponse(errors);
                 return this.Ok(errors);
             }
 

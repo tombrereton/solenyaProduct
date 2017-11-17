@@ -224,6 +224,7 @@
     <Compile Include="Scripts\PopulateDB.cs" />
     <Compile Include="Telemetry\ITelemetryLogger.cs" />
     <Compile Include="Models\ValidationError.cs" />
+    <Compile Include="Telemetry\TelemetryLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

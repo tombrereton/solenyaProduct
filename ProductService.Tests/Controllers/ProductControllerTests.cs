@@ -28,8 +28,8 @@
         public void SetUp()
         {
             this._dataStore = new Mock<IProductsDataStore>();
-            this._productController = new ProductController(this._dataStore.Object);
             this._telemetryLogger = new Mock<ITelemetryLogger>();
+            this._productController = new ProductController(this._dataStore.Object, this._telemetryLogger.Object);
         }
 
         [Test]
@@ -98,16 +98,6 @@
         }
 
         [Test]
-        public void ReturnNotFoundResponseIfProductNotFound()
-        {
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "test_data_product")).Returns(new PdpItem());
-
-            var result = this._productController.GetItem(123);
-
-            Assert.IsAssignableFrom<NotFoundResult>(result);
-        }
-
-        [Test]
         public void ReturnErrorIfProductIdIsInvalid()
         {
             var pdpItem = TestData.CreateTestPdpItem(123);
@@ -155,7 +145,9 @@
 
             this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "products")).Returns(pdpItem);
 
-            var result = this._productController.GetItem(999);
+            this._productController.GetItem(999);
+
+
 
             this._telemetryLogger.Verify(
                 x => x.LogApiErrors(
@@ -168,12 +160,12 @@
         }
 
         private static bool AssertProductApiError(
-            List<ProductApiError> validationError,
+            List<ProductApiError> productApiErrors,
             string expectedErrorCode,
             string expectedErrorMessage)
         {
-            Assert.That(validationError[0].ErrorCode, Is.EqualTo(expectedErrorCode));
-            Assert.That(validationError[0].ErrorMessage, Is.EqualTo(expectedErrorMessage));
+            Assert.That(productApiErrors[0].ErrorCode, Is.EqualTo(expectedErrorCode));
+            Assert.That(productApiErrors[0].ErrorMessage, Is.EqualTo(expectedErrorMessage));
 
             return true;
         }
