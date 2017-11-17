@@ -100,19 +100,27 @@
         }
 
         [Test]
-        public void ShouldReturnNotFoundResponseForIncorrectProductId()
+        public void ShouldReturnErrorIfProductIdIsInvalid()
         {
             var actualItemFromController = this._controller.GetItem(999, this._collectionName);
 
-            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("PdpItemDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Pdp item was not found in the database."));
         }
 
         [Test]
-        public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
+        public void ShouldReturnErrorForIncorrectCollectionName()
         {
             var actualItemFromController = this._controller.GetItem(123, string.Empty);
 
-            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Wrong collection was queried from database."));
         }
     }
 }

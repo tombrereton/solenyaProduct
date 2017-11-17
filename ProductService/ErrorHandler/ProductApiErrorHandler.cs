@@ -41,7 +41,15 @@
                 errors.Add(error);
             }
 
+            if (item.ProductId < 0)
+            {
+                var error = new ProductApiError("CollectionDoesNotExist", "Wrong collection was queried from database.");
+                errors.Add(error);
+            }
+
             return errors;
         }
+
+
     }
 }

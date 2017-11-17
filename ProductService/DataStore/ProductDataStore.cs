@@ -61,6 +61,13 @@ namespace ProductService.DataStore
         {
             try
             {
+                if (collectionName != "products")
+                {
+                    var item = new PdpItem();
+                    item.ProductId = -1;
+                    return item;
+                }
+
                 FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
                 IQueryable<PdpItem> productQueryInSql = this._client.CreateDocumentQuery<PdpItem>(
                     UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),

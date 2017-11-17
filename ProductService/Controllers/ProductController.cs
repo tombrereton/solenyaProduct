@@ -49,7 +49,6 @@
         {
             var item = this._productDataStore.GetPdpItemFromCollection(id, collectionName);
 
-
             var errors = ProductApiErrorHandler.Execute(item);
 
             if (errors.Any())
