@@ -59,9 +59,10 @@ namespace ProductService.DataStore
 
         public PdpItem GetPdpItemFromCollection(int id, string collectionName)
         {
+            List<string> collections = new List<string>(){ "test_data_product", "products" };
             try
             {
-                if (collectionName != "products")
+                if (!collections.Contains(collectionName))
                 {
                     var item = new PdpItem();
                     item.ProductId = -1;

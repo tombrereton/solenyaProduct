@@ -39,6 +39,7 @@
             {
                 var error = new ProductApiError("PdpItemDoesNotExist", "Pdp item was not found in the database.");
                 errors.Add(error);
+                return errors;
             }
 
             if (item.ProductId < 0)
