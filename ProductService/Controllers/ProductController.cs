@@ -19,9 +19,8 @@
     {
         private readonly IProductsDataStore _productDataStore;
 
-        private ITelemetryLogger _logger;
+        private readonly ITelemetryLogger _logger;
 
-        // private readonly ItemValidator _validator = new ItemValidator();
         public ProductController(IProductsDataStore productDataStore, ITelemetryLogger telemetryLogger)
         {
             this._productDataStore = productDataStore;
@@ -39,6 +38,7 @@
 
             if (errors.Any())
             {
+                this._logger.LogApiErrors(errors);
                 return this.Ok(errors);
             }
 
@@ -61,15 +61,6 @@
             }
 
             return this.Ok(item);
-        }
-
-        [Route("test")]
-        [HttpGet]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult Test()
-        {
-            var testString = "Hello, this is a test";
-            return this.Ok(testString);
         }
     }
 }

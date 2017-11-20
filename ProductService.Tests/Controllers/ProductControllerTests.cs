@@ -165,7 +165,7 @@
         }
 
         [Test]
-        public void LogNotFoundErrorWhenNoPdpItemFound()
+        public void LogProductNotFoundErrorWhenNoPdpItemFound()
         {
             var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
 
@@ -183,7 +183,44 @@
                 Times.Once);
         }
 
-        // Todo: Log test for other error msg
+        [Test]
+        public void LogProductOrCollectionNotFoundErrorWhenNoPdpItemFound()
+        {
+            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductOrCollectionNotFoundCode };
+
+            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "products")).Returns(pdpItem);
+
+            this._productController.GetItem(999);
+
+            this._telemetryLogger.Verify(
+                x => x.LogApiErrors(
+                    It.Is<List<ProductApiError>>(
+                        errors => AssertProductApiError(
+                            errors,
+                            "ProductItemOrCollectionNameDoesNotExist",
+                            "Product item or collection name was not found in the database."))),
+                Times.Once);
+        }
+
+        [Test]
+        public void LogCollectionNotFoundErrorWhenNoPlpItemsFound()
+        {
+            var items = new List<PlpItem>() { new PlpItem() { ProductName = ErrorCodes.CollectionNotFoundCode } };
+
+            this._dataStore.Setup(x => x.GetAllPlpItemsFromCollection("wrongCollection")).Returns(items);
+
+            this._productController.GetItems("wrongCollection");
+
+            this._telemetryLogger.Verify(
+                x => x.LogApiErrors(
+                    It.Is<List<ProductApiError>>(
+                        errors => AssertProductApiError(
+                            errors,
+                            "CollectionNameDoesNotExist",
+                            "Collection name was not found in the database."))),
+                Times.Once);
+        }
+
         private static bool AssertProductApiError(
             List<ProductApiError> productApiErrors,
             string expectedErrorCode,

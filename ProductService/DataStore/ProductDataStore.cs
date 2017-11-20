@@ -133,10 +133,6 @@ namespace ProductService.DataStore
                         pdpItem).ConfigureAwait(false);
                     Console.WriteLine("Created PdpItem {0}", pdpItem.ProductId);
                 }
-                else
-                {
-                    throw;
-                }
             }
         }
     }
