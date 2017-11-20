@@ -38,7 +38,7 @@
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
             this._telemetryLogger = new Mock<ITelemetryLogger>();
-            this._controller = new ProductController(this._productDataStore, this._telemetryLogger.Object);
+            this._controller = new ProductController(this._productDataStore);
 
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
