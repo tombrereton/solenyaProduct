@@ -40,6 +40,8 @@
             this._telemetryLogger = new Mock<ITelemetryLogger>();
             this._controller = new ProductController(this._productDataStore);
 
+            this._productDataStore.CreateDocumentCollection("empty_collection");
+
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
 
@@ -47,6 +49,7 @@
         public void GlobalTearDown()
         {
             TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+            this._productDataStore.RemoveDocumentCollection("empty_collection");
         }
 
         [Test]
@@ -81,7 +84,7 @@
         }
 
         [Test]
-        public void ShouldCollectionErrorMsgWhenPlpCollectionNotFoundWithControllerAndDatastore()
+        public void ShouldReturnCollectionErrorMsgWhenPlpCollectionNotFoundWithControllerAndDatastore()
         {
             var actualItemFromController = this._controller.GetItems("wrongCollection");
 
@@ -89,7 +92,23 @@
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionNameDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Collection name was not found in the database."));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Collection name was not found in the database."));
+        }
+
+        [Test]
+        public void ShouldReturnCollectionEmptyErrorMsgWhenPlpCollectionNotFoundWithControllerAndDatastore()
+        {
+            var actualItemFromController = this._controller.GetItems("empty_collection");
+
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionEmpty"));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Collection does not contain any product items in the database."));
         }
 
         [Test]
@@ -121,7 +140,9 @@
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item was not found in the database."));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Product item was not found in the database."));
         }
 
         [Test]
@@ -133,7 +154,9 @@
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemOrCollectionNameDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item or collection name was not found in the database."));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Product item or collection name was not found in the database."));
         }
     }
 }

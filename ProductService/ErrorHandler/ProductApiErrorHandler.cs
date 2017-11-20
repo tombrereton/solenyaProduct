@@ -25,7 +25,6 @@
                     ErrorCodes.ProductNotFoundCode,
                     ErrorCodes.ProductNotFoundInDatabaseMsg);
                 errors.Add(error);
-                return errors;
             }
             else if (item.ProductName.Equals(ErrorCodes.ProductOrCollectionNotFoundCode))
             {
@@ -42,11 +41,15 @@
         {
             var errors = new List<ProductApiError>();
 
-            if (items[0].ProductName.Equals(ErrorCodes.CollectionNotFoundCode))
+            if (items.Count == 0)
+            {
+                var error = new ProductApiError(ErrorCodes.CollectionEmptyCode, ErrorCodes.CollectionEmptyMsg);
+                errors.Add(error);
+            }
+            else if (items[0].ProductName.Equals(ErrorCodes.CollectionNotFoundCode))
             {
                 var error = new ProductApiError(ErrorCodes.CollectionNotFoundCode, ErrorCodes.CollectionNotFoundMsg);
                 errors.Add(error);
-                return errors;
             }
 
             return errors;

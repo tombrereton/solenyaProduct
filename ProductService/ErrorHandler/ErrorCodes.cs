@@ -19,5 +19,9 @@ namespace ProductService.ErrorHandler
         public static string CollectionNotFoundCode = "CollectionNameDoesNotExist";
 
         public static string CollectionNotFoundMsg = "Collection name was not found in the database.";
+
+        public static string CollectionEmptyCode = "CollectionEmpty";
+
+        public static string CollectionEmptyMsg = "Collection does not contain any product items in the database.";
     }
 }

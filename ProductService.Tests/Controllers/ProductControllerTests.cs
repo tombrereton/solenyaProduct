@@ -90,7 +90,23 @@
                 Is.EqualTo("Collection name was not found in the database."));
         }
 
-        // Add test to check if data has been hard coded
+        [Test]
+        public async Task ReturnCollectionEmptyErrorMsgWhenDatastoreReturnsNoProductsForPlp()
+        {
+            var items = new List<PlpItem>();
+            this._dataStore.Setup(x => x.GetAllPlpItemsFromCollection("emptyCollection")).Returns(items);
+
+            var result = this._productController.GetItems("emptyCollection");
+
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)result;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionEmpty"));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Collection does not contain any product items in the database."));
+        }
+
         [Test]
         public void ReturnOnePdpItemById()
         {
