@@ -38,13 +38,13 @@ namespace ProductService.Models
             this.Gender = gender;
         }
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         public string ProductName { get; set; }
 
         public string SplashImgUrl { get; set; }
 
-        public int Price { get; set; }
+        public int? Price { get; set; }
 
         public int? DiscountPrice { get; set; }
 
@@ -74,6 +74,11 @@ namespace ProductService.Models
             {
                 this.VariantId = id;
             }
+
+            public override string ToString()
+            {
+                return string.Empty + this.VariantId;
+            }
         }
 
         public class Image
@@ -91,6 +96,11 @@ namespace ProductService.Models
             public string Colour { get; set; }
 
             public string[] ImageList { get; set; }
+
+            public override string ToString()
+            {
+                return string.Empty + this.Colour + this.ImageList;
+            }
         }
 
         public override bool Equals(object obj)
@@ -106,6 +116,13 @@ namespace ProductService.Models
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Empty + this.ProductId + this.ProductName + this.Price + this.DiscountPrice
+                   + this.BrandDescription + this.ProductBrand + this.ProductDescription + this.Gender + this.Materials
+                   + this.SplashImgUrl + this.ImageOptions + this.Variants;
         }
     }
 }

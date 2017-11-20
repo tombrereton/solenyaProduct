@@ -55,9 +55,9 @@
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
-            var result = TestData.GeneratePlpItemTestData();
+            var expected = TestData.GeneratePlpItemTestData();
 
-            CollectionAssert.AreEqual(result, responseContents);
+            CollectionAssert.AreEqual(expected, responseContents);
         }
 
         [Test]
@@ -86,7 +86,7 @@
             var actualOkNegotiatedContent = actualResponse as OkNegotiatedContentResult<PdpItem>;
             var actualContent = actualOkNegotiatedContent.Content;
 
-            var expectedPdpItem = TestData.GeneratePdpItemTestData()[2];
+            var expectedPdpItem = TestData.GeneratePdpItemTestData()[0];
 
             Assert.AreEqual(expectedPdpItem, actualContent);
         }
@@ -107,8 +107,8 @@
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
 
-            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("PdpItemDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Pdp item was not found in the database."));
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item was not found in the database."));
         }
 
         [Test]
@@ -119,8 +119,8 @@
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
 
-            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Wrong collection was queried from database."));
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemOrCollectionNameDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item or collection name was not found in the database."));
         }
     }
 }

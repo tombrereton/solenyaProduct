@@ -18,15 +18,15 @@
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
-        private readonly ProductApiErrorHandler _errorHandler;
+
+        private ITelemetryLogger _logger;
 
         // private readonly ItemValidator _validator = new ItemValidator();
         public ProductController(IProductsDataStore productDataStore, ITelemetryLogger telemetryLogger)
         {
             this._productDataStore = productDataStore;
-            this._errorHandler = new ProductApiErrorHandler(this, telemetryLogger);
+            this._logger = telemetryLogger;
         }
-
 
         [Route("")]
         [HttpGet]
@@ -53,8 +53,7 @@
 
             if (errors.Any())
             {
-
-                this._errorHandler.HandleFailedProductApiResponse(errors);
+                this._logger.LogApiErrors(errors);
                 return this.Ok(errors);
             }
 

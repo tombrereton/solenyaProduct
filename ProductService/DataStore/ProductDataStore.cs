@@ -10,6 +10,7 @@ namespace ProductService.DataStore
     using Microsoft.Azure.Documents;
     using Microsoft.Azure.Documents.Client;
 
+    using ProductService.ErrorHandler;
     using ProductService.Models;
 
     /// <summary>
@@ -59,16 +60,8 @@ namespace ProductService.DataStore
 
         public PdpItem GetPdpItemFromCollection(int id, string collectionName)
         {
-            List<string> collections = new List<string>(){ "test_data_product", "products" };
             try
             {
-                if (!collections.Contains(collectionName))
-                {
-                    var item = new PdpItem();
-                    item.ProductId = -1;
-                    return item;
-                }
-
                 FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
                 IQueryable<PdpItem> productQueryInSql = this._client.CreateDocumentQuery<PdpItem>(
                     UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
@@ -79,13 +72,13 @@ namespace ProductService.DataStore
             catch (ArgumentOutOfRangeException exception)
             {
                 // When productId does not exist
-                return null;
+                return new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
             }
             catch (AggregateException exception)
             {
                 // When productId does not exist
                 // When collection name does not exist
-                return null;
+                return new PdpItem() { ProductName = ErrorCodes.ProductOrCollectionNotFoundCode };
             }
         }
 

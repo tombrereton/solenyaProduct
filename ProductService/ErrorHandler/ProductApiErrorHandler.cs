@@ -15,42 +15,27 @@
 
         private readonly ITelemetryLogger _telemetryLogger;
 
-        public ProductApiErrorHandler(ApiController controller, ITelemetryLogger telemetryLogger)
-        {
-            this._controller = controller;
-            this._telemetryLogger = telemetryLogger;
-        }
-        public IHttpActionResult HandleFailedProductApiResponse(IEnumerable<ProductApiError> errors)
-        {
-            this._telemetryLogger.LogApiErrors(errors.ToList());
-            return new NegotiatedContentResult<List<ProductApiError>>(HttpStatusCode.BadRequest, MapErrors(errors), this._controller);
-        }
-
-        private static List<ProductApiError> MapErrors(IEnumerable<ProductApiError> errors)
-        {
-            return errors.Select(error => new ProductApiError(error.ErrorCode, error.ErrorMessage)).ToList();
-        }
-
         public static List<ProductApiError> Execute(PdpItem item)
         {
             var errors = new List<ProductApiError>();
 
-            if (item == null)
+            if (item.ProductName.Equals(ErrorCodes.ProductNotFoundCode))
             {
-                var error = new ProductApiError("PdpItemDoesNotExist", "Pdp item was not found in the database.");
+                var error = new ProductApiError(
+                    ErrorCodes.ProductNotFoundCode,
+                    ErrorCodes.ProductNotFoundInDatabaseMsg);
                 errors.Add(error);
                 return errors;
             }
-
-            if (item.ProductId < 0)
+            else if (item.ProductName.Equals(ErrorCodes.ProductOrCollectionNotFoundCode))
             {
-                var error = new ProductApiError("CollectionDoesNotExist", "Wrong collection was queried from database.");
+                var error = new ProductApiError(
+                    ErrorCodes.ProductOrCollectionNotFoundCode,
+                    ErrorCodes.CollectionNotFoundMsg);
                 errors.Add(error);
             }
 
             return errors;
         }
-
-
     }
 }

@@ -10,6 +10,7 @@
 
     using ProductService.Controllers;
     using ProductService.DataStore;
+    using ProductService.ErrorHandler;
     using ProductService.Models;
     using ProductService.Tests.TestData;
 
@@ -98,18 +99,37 @@
         }
 
         [Test]
-        public void ReturnErrorIfProductIdIsInvalid()
+        public void ReturnProductNotFoundErrorMsgIfProductIdIsInvalid()
         {
-            var pdpItem = TestData.CreateTestPdpItem(123);
+            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
 
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "products")).Returns(pdpItem);
+            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "products")).Returns(pdpItem);
 
             var result = this._productController.GetItem(999);
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
             var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)result;
 
-            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("PdpItemDoesNotExist"));
-            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Pdp item was not found in the database."));
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemDoesNotExist"));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Product item was not found in the database."));
+        }
+
+        [Test]
+        public void ReturnProductOrCollectionNameNotFoundErrorMsgIfProductIdIsInvalid()
+        {
+            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductOrCollectionNotFoundCode };
+
+            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "wrongCollection")).Returns(pdpItem);
+
+            var result = this._productController.GetItem(999, "wrongCollection");
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)result;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemOrCollectionNameDoesNotExist"));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Product item or collection name was not found in the database."));
         }
 
         [Test]
@@ -141,21 +161,19 @@
         [Test]
         public void LogNotFoundErrorWhenNoPdpItemFound()
         {
-            var pdpItem = TestData.CreateTestPdpItem(123);
+            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
 
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(123, "products")).Returns(pdpItem);
+            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "products")).Returns(pdpItem);
 
             this._productController.GetItem(999);
-
-
 
             this._telemetryLogger.Verify(
                 x => x.LogApiErrors(
                     It.Is<List<ProductApiError>>(
                         errors => AssertProductApiError(
                             errors,
-                            "PdpItemDoesNotExist",
-                            "Pdp item was not found in the database."))),
+                            "ProductItemDoesNotExist",
+                            "Product item was not found in the database."))),
                 Times.Once);
         }
 
