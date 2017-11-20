@@ -12,6 +12,7 @@
 
     using ProductService.Controllers;
     using ProductService.DataStore;
+    using ProductService.Logger;
     using ProductService.Models;
     using ProductService.Tests.Controllers;
     using ProductService.Tests.TestData;

@@ -11,6 +11,7 @@
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.ErrorHandler;
+    using ProductService.Logger;
     using ProductService.Models;
     using ProductService.Tests.TestData;
 

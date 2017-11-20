@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ProductService.Telemetry
+﻿namespace ProductService.Logger
 {
+    using System;
+    using System.Collections.Generic;
+
     using Microsoft.ApplicationInsights;
+    using Microsoft.ApplicationInsights.DataContracts;
 
     using ProductService.Models;
-    using ProductService.Tests.Controllers;
 
     public class TelemetryLogger : ITelemetryLogger
     {
@@ -42,5 +40,16 @@ namespace ProductService.Telemetry
         {
             this._telemetryClient.TrackException(exception);
         }
+
+        public void Sanitize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DateTimeOffset Timestamp { get; set; }
+
+        public TelemetryContext Context { get; }
+
+        public string Sequence { get; set; }
     }
 }
