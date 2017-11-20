@@ -1,19 +1,16 @@
 ﻿namespace ProductService.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
     using System.Web.Http.Cors;
 
-    using Castle.Core.Internal;
-
-    using Microsoft.Azure.Documents.SystemFunctions;
+    using Microsoft.ApplicationInsights;
 
     using ProductService.DataStore;
     using ProductService.ErrorHandler;
+    using ProductService.Logger;
     using ProductService.Models;
-    using ProductService.Tests.Controllers;
 
     public class ProductController : ApiController
     {
@@ -21,10 +18,10 @@
 
         private readonly ITelemetryLogger _logger;
 
-        public ProductController(IProductsDataStore productDataStore, ITelemetryLogger telemetryLogger)
+        public ProductController(IProductsDataStore productDataStore)
         {
             this._productDataStore = productDataStore;
-            this._logger = telemetryLogger;
+            this._logger = new TelemetryLogger(new TelemetryClient());
         }
 
         [Route("")]

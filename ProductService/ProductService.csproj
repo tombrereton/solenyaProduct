@@ -223,9 +223,9 @@
     <Compile Include="Models\ProductApiError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\PopulateDB.cs" />
-    <Compile Include="Telemetry\ITelemetryLogger.cs" />
+    <Compile Include="Logger\ITelemetryLogger.cs" />
     <Compile Include="Models\ValidationError.cs" />
-    <Compile Include="Telemetry\TelemetryLogger.cs" />
+    <Compile Include="Logger\TelemetryLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

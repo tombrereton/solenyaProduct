@@ -6,8 +6,8 @@
     using System.Web.Http;
     using System.Web.Http.Results;
 
+    using ProductService.Logger;
     using ProductService.Models;
-    using ProductService.Tests.Controllers;
 
     public class ProductApiErrorHandler
     {
