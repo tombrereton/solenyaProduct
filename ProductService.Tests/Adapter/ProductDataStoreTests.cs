@@ -19,10 +19,11 @@
         [OneTimeSetUp]
         public void GlobalSetup()
         {
-            string EndpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
-            string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
+            string endpointUrl = ConfigurationManager.AppSettings["DocumentDBEndpoint"];
+            string primaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
-            this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
+            this._productDataStore = new ProductDataStore(endpointUrl, primaryKey);
+            this._productDataStore.CreateDocumentCollection("empty_collection").Wait();
 
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
@@ -31,12 +32,13 @@
         public void GlobalTearDown()
         {
             TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+            this._productDataStore.RemoveDocumentCollection("empty_collection").Wait();
         }
 
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = _productDataStore.GetAllPlpItemsFromCollection(this._collectionName);
+            var itemsFromDataStore = this._productDataStore.GetAllPlpItemsFromCollection(this._collectionName);
             var expectedData = TestData.GeneratePlpItemTestData();
 
             CollectionAssert.AreEqual(itemsFromDataStore, expectedData);
@@ -45,7 +47,7 @@
         [Test]
         public void ReturnProductIdOrCollectionErrorMsgWhenPlpCollectionDoesNotExist()
         {
-            var actualItemfromDataStore = _productDataStore.GetAllPlpItemsFromCollection("wrongCollection");
+            var actualItemfromDataStore = this._productDataStore.GetAllPlpItemsFromCollection("wrongCollection");
             var expected = new List<PlpItem>() { new PlpItem() { ProductName = "CollectionNameDoesNotExist" } };
 
             Assert.AreEqual(expected, actualItemfromDataStore);
@@ -74,6 +76,15 @@
         {
             var actualItemfromDataStore = this._productDataStore.GetPdpItemFromCollection(123, "wrongCollectionName");
             var expected = new PdpItem() { ProductName = "ProductItemOrCollectionNameDoesNotExist" };
+
+            Assert.AreEqual(expected, actualItemfromDataStore);
+        }
+
+        [Test]
+        public void ReturnCollectionEmptyErrorMsgWhenCollectionEmpty()
+        {
+            var actualItemfromDataStore = this._productDataStore.GetAllPlpItemsFromCollection("empty_collection");
+            var expected = new List<PlpItem>();
 
             Assert.AreEqual(expected, actualItemfromDataStore);
         }
