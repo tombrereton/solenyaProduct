@@ -13,15 +13,18 @@
     using ProductService.DataStore;
     using ProductService.ErrorHandler;
     using ProductService.Models;
+    using ProductService.Tests.Controllers;
 
     public class ProductController : ApiController
     {
         private readonly IProductsDataStore _productDataStore;
 
-        // private readonly ItemValidator _validator = new ItemValidator();
-        public ProductController(IProductsDataStore productDataStore)
+        private readonly ITelemetryLogger _logger;
+
+        public ProductController(IProductsDataStore productDataStore, ITelemetryLogger telemetryLogger)
         {
             this._productDataStore = productDataStore;
+            this._logger = telemetryLogger;
         }
 
         [Route("")]
@@ -30,9 +33,13 @@
         public IHttpActionResult GetItems(string collectionName = "products")
         {
             var items = this._productDataStore.GetAllPlpItemsFromCollection(collectionName) as List<PlpItem>;
-            if (items.IsNullOrEmpty())
+
+            var errors = ProductApiErrorHandler.Execute(items);
+
+            if (errors.Any())
             {
-                return this.NotFound();
+                this._logger.LogApiErrors(errors);
+                return this.Ok(errors);
             }
 
             return this.Ok(items);
@@ -45,25 +52,15 @@
         {
             var item = this._productDataStore.GetPdpItemFromCollection(id, collectionName);
 
-
             var errors = ProductApiErrorHandler.Execute(item);
 
             if (errors.Any())
             {
-            
+                this._logger.LogApiErrors(errors);
                 return this.Ok(errors);
             }
 
             return this.Ok(item);
-        }
-
-        [Route("test")]
-        [HttpGet]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult Test()
-        {
-            var testString = "Hello, this is a test";
-            return this.Ok(testString);
         }
     }
 }

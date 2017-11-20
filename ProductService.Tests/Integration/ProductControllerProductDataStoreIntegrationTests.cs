@@ -6,11 +6,14 @@
     using System.Web.Http.Results;
     using System.Xml.Serialization;
 
+    using Moq;
+
     using NUnit.Framework;
 
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
+    using ProductService.Tests.Controllers;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -22,6 +25,8 @@
 
         private IEnumerable<PlpItem> _testItem;
 
+        private Mock<ITelemetryLogger> _telemetryLogger;
+
         private readonly string _collectionName = "test_data_product";
 
         [OneTimeSetUp]
@@ -31,7 +36,8 @@
             string PrimaryKey = ConfigurationManager.AppSettings["DocumentDBPrimaryKey"];
 
             this._productDataStore = new ProductDataStore(EndpointUrl, PrimaryKey);
-            this._controller = new ProductController(this._productDataStore);
+            this._telemetryLogger = new Mock<ITelemetryLogger>();
+            this._controller = new ProductController(this._productDataStore, this._telemetryLogger.Object);
 
             TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
@@ -49,9 +55,9 @@
             var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
 
             // import items from json file and assign to variable
-            var result = TestData.GeneratePlpItemTestData();
+            var expected = TestData.GeneratePlpItemTestData();
 
-            CollectionAssert.AreEqual(result, responseContents);
+            CollectionAssert.AreEqual(expected, responseContents);
         }
 
         [Test]
@@ -74,13 +80,25 @@
         }
 
         [Test]
+        public void ShouldCollectionErrorMsgWhenPlpCollectionNotFoundWithControllerAndDatastore()
+        {
+            var actualItemFromController = this._controller.GetItems("wrongCollection");
+
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionNameDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Collection name was not found in the database."));
+        }
+
+        [Test]
         public void ShouldReturnPdpItemFromControllerAndDatastore()
         {
             var actualResponse = this._controller.GetItem(123, this._collectionName);
             var actualOkNegotiatedContent = actualResponse as OkNegotiatedContentResult<PdpItem>;
             var actualContent = actualOkNegotiatedContent.Content;
 
-            var expectedPdpItem = TestData.GeneratePdpItemTestData()[2];
+            var expectedPdpItem = TestData.GeneratePdpItemTestData()[0];
 
             Assert.AreEqual(expectedPdpItem, actualContent);
         }
@@ -94,19 +112,27 @@
         }
 
         [Test]
-        public void ShouldReturnNotFoundResponseForIncorrectProductId()
+        public void ShouldReturnErrorIfProductIdIsInvalid()
         {
             var actualItemFromController = this._controller.GetItem(999, this._collectionName);
 
-            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item was not found in the database."));
         }
 
         [Test]
-        public void ShouldReturnNotFoundResponseForIncorrectCollectionName()
+        public void ShouldReturnErrorForIncorrectCollectionName()
         {
             var actualItemFromController = this._controller.GetItem(123, string.Empty);
 
-            Assert.IsInstanceOf(typeof(NotFoundResult), actualItemFromController);
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemOrCollectionNameDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Product item or collection name was not found in the database."));
         }
     }
 }

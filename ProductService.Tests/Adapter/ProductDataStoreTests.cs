@@ -1,5 +1,6 @@
 ﻿namespace ProductService.Tests.Adapter
 {
+    using System.Collections.Generic;
     using System.Configuration;
 
     using NUnit.Framework;
@@ -42,6 +43,15 @@
         }
 
         [Test]
+        public void ReturnProductIdOrCollectionErrorMsgWhenPlpCollectionDoesNotExist()
+        {
+            var actualItemfromDataStore = _productDataStore.GetAllPlpItemsFromCollection("wrongCollection");
+            var expected = new List<PlpItem>() { new PlpItem() { ProductName = "CollectionNameDoesNotExist" } };
+
+            Assert.AreEqual(expected, actualItemfromDataStore);
+        }
+
+        [Test]
         public void ReturnExactPdpItem()
         {
             var actualItemFromDataStore = this._productDataStore.GetPdpItemFromCollection(123, this._collectionName);
@@ -51,19 +61,19 @@
         }
 
         [Test]
-        public void ReturnNullWhenPdpItemDoesNotExist()
+        public void ReturnProductIdErrorMsgWhenPdpItemDoesNotExist()
         {
             var actualItemFromDataStore = this._productDataStore.GetPdpItemFromCollection(999, this._collectionName);
-            object expected = null;
+            var expected = new PdpItem() { ProductName = "ProductItemDoesNotExist" };
 
             Assert.AreEqual(expected, actualItemFromDataStore);
         }
 
         [Test]
-        public void ReturnNullWhenCollectionDoesNotExist()
+        public void ReturnProductIdOrCollectionErrorMsgWhenCollectionDoesNotExist()
         {
             var actualItemfromDataStore = this._productDataStore.GetPdpItemFromCollection(123, "wrongCollectionName");
-            object expected = null;
+            var expected = new PdpItem() { ProductName = "ProductItemOrCollectionNameDoesNotExist" };
 
             Assert.AreEqual(expected, actualItemfromDataStore);
         }

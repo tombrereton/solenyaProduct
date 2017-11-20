@@ -22,17 +22,17 @@ namespace ProductService.Models
             this.DiscountPrice = discountPrice;
         }
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         public string ProductName { get; set; }
 
         public string SplashImgUrl { get; set; }
 
-        public int Price { get; set; }
+        public int? Price { get; set; }
 
         public int? DiscountPrice { get; set; }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             var plpItem = (PlpItem)obj;
 
@@ -56,6 +56,12 @@ namespace ProductService.Models
             hashCode = (hashCode * -1521134295) + this.Price.GetHashCode();
             hashCode = (hashCode * -1521134295) + EqualityComparer<int?>.Default.GetHashCode(this.DiscountPrice);
             return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return string.Empty + this.ProductId + this.ProductName + this.Price + this.DiscountPrice
+                   + this.SplashImgUrl;
         }
     }
 }

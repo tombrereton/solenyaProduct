@@ -10,6 +10,7 @@ namespace ProductService.DataStore
     using Microsoft.Azure.Documents;
     using Microsoft.Azure.Documents.Client;
 
+    using ProductService.ErrorHandler;
     using ProductService.Models;
 
     /// <summary>
@@ -48,13 +49,21 @@ namespace ProductService.DataStore
         /// </returns>
         public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
-            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
-            IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
-                UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
-                "SELECT * FROM products",
-                queryOptions);
+            try
+            {
+                FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+                IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
+                    UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
+                    "SELECT * FROM products",
+                    queryOptions);
 
-            return productsQueryInSql.ToList<PlpItem>();
+                return productsQueryInSql.ToList<PlpItem>();
+            }
+            catch (AggregateException exception)
+            {
+                var item = new PlpItem() { ProductName = ErrorCodes.CollectionNotFoundCode };
+                return new List<PlpItem>() { item };
+            }
         }
 
         public PdpItem GetPdpItemFromCollection(int id, string collectionName)
@@ -71,13 +80,13 @@ namespace ProductService.DataStore
             catch (ArgumentOutOfRangeException exception)
             {
                 // When productId does not exist
-                return null;
+                return new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
             }
             catch (AggregateException exception)
             {
                 // When productId does not exist
                 // When collection name does not exist
-                return null;
+                return new PdpItem() { ProductName = ErrorCodes.ProductOrCollectionNotFoundCode };
             }
         }
 
@@ -123,10 +132,6 @@ namespace ProductService.DataStore
                         UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
                         pdpItem).ConfigureAwait(false);
                     Console.WriteLine("Created PdpItem {0}", pdpItem.ProductId);
-                }
-                else
-                {
-                    throw;
                 }
             }
         }

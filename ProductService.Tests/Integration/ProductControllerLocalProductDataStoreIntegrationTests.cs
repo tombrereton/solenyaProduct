@@ -3,12 +3,15 @@
     using System.Collections.Generic;
     using System.Web.Http.Results;
 
+    using Moq;
+
     using NUnit.Framework;
 
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Models;
     using ProductService.Tests.Adapter;
+    using ProductService.Tests.Controllers;
     using ProductService.Tests.TestData;
 
     [TestFixture]
@@ -18,11 +21,14 @@
 
         private ProductController _controller;
 
+        private Mock<ITelemetryLogger> _telemetryLogger;
+
         [SetUp]
         public void SetUp()
         {
             this._localProductDataStore = new LocalProductDataStore();
-            this._controller = new ProductController(this._localProductDataStore);
+            this._telemetryLogger = new Mock<ITelemetryLogger>();
+            this._controller = new ProductController(this._localProductDataStore, this._telemetryLogger.Object);
         }
 
         [Test]
