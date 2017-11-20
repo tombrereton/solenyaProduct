@@ -31,8 +31,22 @@
             {
                 var error = new ProductApiError(
                     ErrorCodes.ProductOrCollectionNotFoundCode,
-                    ErrorCodes.CollectionNotFoundMsg);
+                    ErrorCodes.ProductOrCollectionNotFoundMsg);
                 errors.Add(error);
+            }
+
+            return errors;
+        }
+
+        public static List<ProductApiError> Execute(List<PlpItem> items)
+        {
+            var errors = new List<ProductApiError>();
+
+            if (items[0].ProductName.Equals(ErrorCodes.CollectionNotFoundCode))
+            {
+                var error = new ProductApiError(ErrorCodes.CollectionNotFoundCode, ErrorCodes.CollectionNotFoundMsg);
+                errors.Add(error);
+                return errors;
             }
 
             return errors;

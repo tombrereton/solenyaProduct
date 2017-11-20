@@ -1,5 +1,6 @@
 ﻿namespace ProductService.Tests.Adapter
 {
+    using System.Collections.Generic;
     using System.Configuration;
 
     using NUnit.Framework;
@@ -42,6 +43,15 @@
         }
 
         [Test]
+        public void ReturnProductIdOrCollectionErrorMsgWhenPlpCollectionDoesNotExist()
+        {
+            var actualItemfromDataStore = _productDataStore.GetAllPlpItemsFromCollection("wrongCollection");
+            var expected = new List<PlpItem>() { new PlpItem() { ProductName = "CollectionNameDoesNotExist" } };
+
+            Assert.AreEqual(expected, actualItemfromDataStore);
+        }
+
+        [Test]
         public void ReturnExactPdpItem()
         {
             var actualItemFromDataStore = this._productDataStore.GetPdpItemFromCollection(123, this._collectionName);
@@ -67,7 +77,5 @@
 
             Assert.AreEqual(expected, actualItemfromDataStore);
         }
-
-
     }
 }

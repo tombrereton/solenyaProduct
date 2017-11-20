@@ -34,9 +34,12 @@
         public IHttpActionResult GetItems(string collectionName = "products")
         {
             var items = this._productDataStore.GetAllPlpItemsFromCollection(collectionName) as List<PlpItem>;
-            if (items.IsNullOrEmpty())
+
+            var errors = ProductApiErrorHandler.Execute(items);
+
+            if (errors.Any())
             {
-                return this.NotFound();
+                return this.Ok(errors);
             }
 
             return this.Ok(items);

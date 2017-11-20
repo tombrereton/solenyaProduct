@@ -49,13 +49,21 @@ namespace ProductService.DataStore
         /// </returns>
         public IEnumerable<PlpItem> GetAllPlpItemsFromCollection(string collectionName)
         {
-            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
-            IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
-                UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
-                "SELECT * FROM products",
-                queryOptions);
+            try
+            {
+                FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+                IQueryable<PlpItem> productsQueryInSql = this._client.CreateDocumentQuery<PlpItem>(
+                    UriFactory.CreateDocumentCollectionUri(this._documentDbName, collectionName),
+                    "SELECT * FROM products",
+                    queryOptions);
 
-            return productsQueryInSql.ToList<PlpItem>();
+                return productsQueryInSql.ToList<PlpItem>();
+            }
+            catch (AggregateException exception)
+            {
+                var item = new PlpItem() { ProductName = ErrorCodes.CollectionNotFoundCode };
+                return new List<PlpItem>() { item };
+            }
         }
 
         public PdpItem GetPdpItemFromCollection(int id, string collectionName)

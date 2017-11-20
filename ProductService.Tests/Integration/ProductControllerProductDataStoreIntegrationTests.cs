@@ -80,6 +80,18 @@
         }
 
         [Test]
+        public void ShouldCollectionErrorMsgWhenPlpCollectionNotFoundWithControllerAndDatastore()
+        {
+            var actualItemFromController = this._controller.GetItems("wrongCollection");
+
+            Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionNameDoesNotExist"));
+            Assert.That(resultMessage.Content[0].ErrorMessage, Is.EqualTo("Collection name was not found in the database."));
+        }
+
+        [Test]
         public void ShouldReturnPdpItemFromControllerAndDatastore()
         {
             var actualResponse = this._controller.GetItem(123, this._collectionName);

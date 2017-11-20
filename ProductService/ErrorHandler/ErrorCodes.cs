@@ -13,6 +13,11 @@ namespace ProductService.ErrorHandler
 
         public static string ProductNotFoundInDatabaseMsg = "Product item was not found in the database.";
 
-        public static string CollectionNotFoundMsg = "Product item or collection name was not found in the database.";
+        public static string ProductOrCollectionNotFoundMsg =
+            "Product item or collection name was not found in the database.";
+
+        public static string CollectionNotFoundCode = "CollectionNameDoesNotExist";
+
+        public static string CollectionNotFoundMsg = "Collection name was not found in the database.";
     }
 }

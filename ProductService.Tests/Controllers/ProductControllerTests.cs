@@ -73,14 +73,20 @@
         }
 
         [Test]
-        public async Task ReturnNotFoundResultWhenDatastoreReturnsNoProductsForPlp()
+        public async Task ReturnCollectionErrorMsgWhenDatastoreReturnsNoProductsForPlp()
         {
-            this._dataStore.Setup(x => x.GetAllPlpItemsFromCollection("test_data_product"))
-                .Returns(new List<PlpItem>());
+            var items = new List<PlpItem>() { new PlpItem() { ProductName = ErrorCodes.CollectionNotFoundCode } };
+            this._dataStore.Setup(x => x.GetAllPlpItemsFromCollection("wrongCollection")).Returns(items);
 
-            var result = this._productController.GetItems();
+            var result = this._productController.GetItems("wrongCollection");
 
-            Assert.IsAssignableFrom<NotFoundResult>(result);
+            Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)result;
+
+            Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionNameDoesNotExist"));
+            Assert.That(
+                resultMessage.Content[0].ErrorMessage,
+                Is.EqualTo("Collection name was not found in the database."));
         }
 
         // Add test to check if data has been hard coded
@@ -177,6 +183,7 @@
                 Times.Once);
         }
 
+        // Todo: Log test for other error msg
         private static bool AssertProductApiError(
             List<ProductApiError> productApiErrors,
             string expectedErrorCode,
