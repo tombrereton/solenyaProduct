@@ -31,7 +31,7 @@
         {
             this._dataStore = new Mock<IProductsDataStore>();
             this._telemetryLogger = new Mock<ITelemetryLogger>();
-            this._productController = new ProductController(this._dataStore.Object, this._telemetryLogger.Object);
+            this._productController = new ProductController(this._dataStore.Object);
         }
 
         [Test]
@@ -163,74 +163,6 @@
             var result = this._productController.GetItem(123);
 
             Assert.That(result, Is.InstanceOf<OkNegotiatedContentResult<PdpItem>>());
-        }
-
-        [Test]
-        public void LogProductNotFoundErrorWhenNoPdpItemFound()
-        {
-            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductNotFoundCode };
-
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "products")).Returns(pdpItem);
-
-            this._productController.GetItem(999);
-
-            this._telemetryLogger.Verify(
-                x => x.LogApiErrors(
-                    It.Is<List<ProductApiError>>(
-                        errors => AssertProductApiError(
-                            errors,
-                            "ProductItemDoesNotExist",
-                            "Product item was not found in the database."))),
-                Times.Once);
-        }
-
-        [Test]
-        public void LogProductOrCollectionNotFoundErrorWhenNoPdpItemFound()
-        {
-            var pdpItem = new PdpItem() { ProductName = ErrorCodes.ProductOrCollectionNotFoundCode };
-
-            this._dataStore.Setup(x => x.GetPdpItemFromCollection(999, "products")).Returns(pdpItem);
-
-            this._productController.GetItem(999);
-
-            this._telemetryLogger.Verify(
-                x => x.LogApiErrors(
-                    It.Is<List<ProductApiError>>(
-                        errors => AssertProductApiError(
-                            errors,
-                            "ProductItemOrCollectionNameDoesNotExist",
-                            "Product item or collection name was not found in the database."))),
-                Times.Once);
-        }
-
-        [Test]
-        public void LogCollectionNotFoundErrorWhenNoPlpItemsFound()
-        {
-            var items = new List<PlpItem>() { new PlpItem() { ProductName = ErrorCodes.CollectionNotFoundCode } };
-
-            this._dataStore.Setup(x => x.GetAllPlpItemsFromCollection("wrongCollection")).Returns(items);
-
-            this._productController.GetItems("wrongCollection");
-
-            this._telemetryLogger.Verify(
-                x => x.LogApiErrors(
-                    It.Is<List<ProductApiError>>(
-                        errors => AssertProductApiError(
-                            errors,
-                            "CollectionNameDoesNotExist",
-                            "Collection name was not found in the database."))),
-                Times.Once);
-        }
-
-        private static bool AssertProductApiError(
-            List<ProductApiError> productApiErrors,
-            string expectedErrorCode,
-            string expectedErrorMessage)
-        {
-            Assert.That(productApiErrors[0].ErrorCode, Is.EqualTo(expectedErrorCode));
-            Assert.That(productApiErrors[0].ErrorMessage, Is.EqualTo(expectedErrorMessage));
-
-            return true;
         }
     }
 }

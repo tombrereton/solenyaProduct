@@ -20,8 +20,6 @@
         {
             var container = new WindsorContainer();
 
-//            container.Register(Component.For<ITeletryLogger>.ImplementedBy())
-
             container.Register(
                 Component.For<IProductsDataStore>().ImplementedBy<ProductDataStore>().DependsOn(
                     Dependency.OnAppSettingsValue("endPointUrl", "DocumentDBEndpoint"),

@@ -29,7 +29,7 @@
         {
             this._localProductDataStore = new LocalProductDataStore();
             this._telemetryLogger = new Mock<ITelemetryLogger>();
-            this._controller = new ProductController(this._localProductDataStore, this._telemetryLogger.Object);
+            this._controller = new ProductController(this._localProductDataStore);
         }
 
         [Test]

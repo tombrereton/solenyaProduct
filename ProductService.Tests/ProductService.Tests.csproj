@@ -123,6 +123,7 @@
       <DependentUpon>ProductAPIFeature.feature</DependentUpon>
     </Compile>
     <Compile Include="Acceptance\ProductAPIFeatureSteps.cs" />
+    <Compile Include="Logger\LoggerTests.cs" />
     <Compile Include="TestData\TestData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Integration\ProductControllerLocalProductDataStoreIntegrationTests.cs" />
