@@ -1,0 +1,179 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appInsightsName": {
+      "defaultValue": "asbc-ai-todo-eun-teamname",
+      "type": "string"
+    },
+    "databaseName": {
+      "defaultValue": "asbc-cdb-todo-eun-teamname",
+      "type": "string"
+    },
+    "appServiceNameEUN": {
+      "defaultValue": "asbc-as-todo-eun-teamname",
+      "type": "string"
+    },
+    "appServicePlanNameEUN": {
+      "defaultValue": "asbc-asp-todo-eun-teamname",
+      "type": "string"
+    },
+    "appServiceNameEUW": {
+      "defaultValue": "asbc-as-todo-euw-teamname",
+      "type": "string"
+    },
+    "appServicePlanNameEUW": {
+      "defaultValue": "asbc-asp-todo-euw-teamname",
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Insights/components",
+      "kind": "other",
+      "name": "[toLower(parameters('appInsightsName'))]",
+      "apiVersion": "2014-04-01",
+      "location": "northeurope",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "scale": null,
+      "properties": {
+        "ApplicationId": "[toLower(parameters('appInsightsName'))]"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "kind": "GlobalDocumentDB",
+      "name": "[toLower(parameters('databaseName'))]",
+      "apiVersion": "2015-04-08",
+      "location": "North Europe",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "scale": null,
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session",
+          "maxIntervalInSeconds": "5",
+          "maxStalenessPrefix": "100"
+        },
+        "name": "[toLower(parameters('databaseName'))]"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "S1",
+        "capacity": 1
+      },
+      "kind": "app",
+      "name": "[toLower(parameters('appServicePlanNameEUN'))]",
+      "apiVersion": "2016-09-01",
+      "location": "North Europe",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "properties": {
+        "name": "[toLower(parameters('appServicePlanNameEUN'))]"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "kind": "api",
+      "name": "[toLower(parameters('appServiceNameEUN'))]",
+      "apiVersion": "2016-08-01",
+      "location": "North Europe",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', toLower(parameters('appServicePlanNameEUN')))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "DocumentDatabase/Key",
+              "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(parameters('databaseName'))), '2015-11-06').primaryMasterKey]",
+              "type": "Custom"
+            },
+            {
+              "name": "DocumentDatabase/EndpointAddress",
+              "value": "[concat('https://', toLower(parameters('databaseName')), '.documents.azure.com:443')]",
+              "type": "Custom"
+            },
+            {
+              "name": "ApplicationInsights/InstrumentationKey",
+              "value": "[reference(resourceId('Microsoft.Insights/components', toLower(parameters('appInsightsName')))).InstrumentationKey]",
+              "type": "Custom"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', toLower(parameters('appServicePlanNameEUN')))]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(parameters('databaseName')))]",
+        "[resourceId('Microsoft.Insights/components', toLower(parameters('appInsightsName')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "S1",
+        "capacity": 1
+      },
+      "kind": "app",
+      "name": "[toLower(parameters('appServicePlanNameEUW'))]",
+      "apiVersion": "2016-09-01",
+      "location": "West Europe",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "properties": {
+        "name": "[toLower(parameters('appServicePlanNameEUW'))]"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "kind": "api",
+      "name": "[toLower(parameters('appServiceNameEUW'))]",
+      "apiVersion": "2016-08-01",
+      "location": "West Europe",
+      "tags": {
+        "platform": "emergenttalent2017"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', toLower(parameters('appServicePlanNameEUW')))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "DocumentDatabase/Key",
+              "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(parameters('databaseName'))), '2015-11-06').primaryMasterKey]",
+              "type": "Custom"
+            },
+            {
+              "name": "DocumentDatabase/EndpointAddress",
+              "value": "[concat('https://', toLower(parameters('databaseName')), '.documents.azure.com:443')]",
+              "type": "Custom"
+            },
+            {
+              "name": "ApplicationInsights/InstrumentationKey",
+              "value": "[reference(resourceId('Microsoft.Insights/components', toLower(parameters('appInsightsName')))).InstrumentationKey]",
+              "type": "Custom"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', toLower(parameters('appServicePlanNameEUW')))]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(parameters('databaseName')))]",
+        "[resourceId('Microsoft.Insights/components', toLower(parameters('appInsightsName')))]"
+      ]
+    }
+  ]
+}
