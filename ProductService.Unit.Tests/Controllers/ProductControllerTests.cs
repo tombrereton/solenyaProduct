@@ -1,4 +1,4 @@
-﻿namespace ProductService.Tests.Controllers
+﻿namespace ProductService.Unit.Tests
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -14,8 +14,6 @@
     using ProductService.Logger;
     using ProductService.Models;
     using ProductService.Tests.TestData;
-
-    using Assert = NUnit.Framework.Assert;
 
     [TestFixture]
     public class ProductControllerTests

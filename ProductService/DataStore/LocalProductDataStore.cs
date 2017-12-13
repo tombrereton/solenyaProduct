@@ -1,12 +1,7 @@
 namespace ProductService.DataStore
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-
-    using Microsoft.Azure.Documents.SystemFunctions;
-
     using Newtonsoft.Json;
 
     using ProductService.Models;

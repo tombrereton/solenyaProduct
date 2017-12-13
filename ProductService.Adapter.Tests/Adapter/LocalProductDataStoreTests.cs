@@ -1,11 +1,8 @@
-﻿namespace ProductService.Tests.Adapter
+﻿namespace ProductService.Adapter.Tests
 {
     using System.Linq;
-
     using NUnit.Framework;
-
     using ProductService.DataStore;
-    using ProductService.Tests.TestData;
 
     [TestFixture]
     public class LocalProductDataStoreTests
@@ -15,13 +12,13 @@
         [SetUp]
         public void SetUp()
         {
-            this._localProductDataStore = new LocalProductDataStore();
+            _localProductDataStore = new LocalProductDataStore();
         }
 
         [Test]
         public void ReturnExactListOfItems()
         {
-            var itemsFromDataStore = this._localProductDataStore.GetAllPlpItemsFromCollection("test_data_product");
+            var itemsFromDataStore = _localProductDataStore.GetAllPlpItemsFromCollection("test_data_product");
 
             var result = TestData.GetLocalItems();
 

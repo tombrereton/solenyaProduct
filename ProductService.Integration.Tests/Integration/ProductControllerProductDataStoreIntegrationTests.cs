@@ -1,21 +1,16 @@
-﻿namespace ProductService.Tests.Integration
+﻿namespace ProductService.Integration.Tests
 {
     using System.Collections.Generic;
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Http.Results;
     using System.Xml.Serialization;
-
     using Moq;
-
     using NUnit.Framework;
-
     using ProductService.Controllers;
     using ProductService.DataStore;
     using ProductService.Logger;
     using ProductService.Models;
-    using ProductService.Tests.Controllers;
-    using ProductService.Tests.TestData;
 
     [TestFixture]
     public class ProductControllerProductDataStoreIntegrationTests
@@ -42,13 +37,13 @@
 
             this._productDataStore.CreateDocumentCollection("empty_collection");
 
-            TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
+            TestData.TestData.SetUpDBWithTestData(this._productDataStore, this._collectionName);
         }
 
         [OneTimeTearDown]
         public void GlobalTearDown()
         {
-            TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
+            TestData.TestData.TearDownDBTestData(this._productDataStore, this._collectionName);
             this._productDataStore.RemoveDocumentCollection("empty_collection");
         }
 
@@ -56,10 +51,10 @@
         public void ShouldReturnPlpContentsMatchingListFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItems(this._collectionName);
-            var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>)response).Content;
+            var responseContents = ((OkNegotiatedContentResult<List<PlpItem>>) response).Content;
 
             // import items from json file and assign to variable
-            var expected = TestData.GeneratePlpItemTestData();
+            var expected = TestData.TestData.GeneratePlpItemTestData();
 
             CollectionAssert.AreEqual(expected, responseContents);
         }
@@ -68,9 +63,9 @@
         public void ShouldReturnPdpContentMatchingItemFromJsonWithControllerAndDatastore()
         {
             var response = this._controller.GetItem(123, this._collectionName);
-            var responseContents = ((OkNegotiatedContentResult<PdpItem>)response).Content;
+            var responseContents = ((OkNegotiatedContentResult<PdpItem>) response).Content;
 
-            var result = TestData.GenerateSinglePdpItemTestData();
+            var result = TestData.TestData.GeneratePdpItemTestData()[0];
 
             Assert.AreEqual(result, responseContents);
         }
@@ -89,7 +84,7 @@
             var actualItemFromController = this._controller.GetItems("wrongCollection");
 
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
-            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>) actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionNameDoesNotExist"));
             Assert.That(
@@ -103,7 +98,7 @@
             var actualItemFromController = this._controller.GetItems("empty_collection");
 
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
-            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>) actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("CollectionEmpty"));
             Assert.That(
@@ -118,7 +113,7 @@
             var actualOkNegotiatedContent = actualResponse as OkNegotiatedContentResult<PdpItem>;
             var actualContent = actualOkNegotiatedContent.Content;
 
-            var expectedPdpItem = TestData.GeneratePdpItemTestData()[0];
+            var expectedPdpItem = TestData.TestData.GeneratePdpItemTestData()[0];
 
             Assert.AreEqual(expectedPdpItem, actualContent);
         }
@@ -137,7 +132,7 @@
             var actualItemFromController = this._controller.GetItem(999, this._collectionName);
 
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
-            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>) actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemDoesNotExist"));
             Assert.That(
@@ -151,7 +146,7 @@
             var actualItemFromController = this._controller.GetItem(123, string.Empty);
 
             Assert.That(actualItemFromController, Is.InstanceOf<OkNegotiatedContentResult<List<ProductApiError>>>());
-            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>)actualItemFromController;
+            var resultMessage = (OkNegotiatedContentResult<List<ProductApiError>>) actualItemFromController;
 
             Assert.That(resultMessage.Content[0].ErrorCode, Is.EqualTo("ProductItemOrCollectionNameDoesNotExist"));
             Assert.That(
